@@ -12,6 +12,8 @@
 
 <body>
 
+    <div class="animated-bg"></div>
+
     <!-- use ids to target things with css-->
     <!-- Navigation -->
     <nav id="desktop-nav">
@@ -20,6 +22,7 @@
             <!-- ul refers to unordered list -->
             <ul class="nav-links">
                 <li><a href="#about">About</a></li> <!-- the # will allow us to link to other parts of the site-->
+                <li><a href="#work">Work</a></li>
                 <li><a href="#experience">Experience</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
@@ -39,6 +42,7 @@
             </div>
             <div class="menu-links">
                 <li><a href="#about" onclick="toggleMenu()">About</a></li>
+                <li><a href="#work" onclick="toggleMenu()">Work</a></li>
                 <li><a href="#experience" onclick="toggleMenu()">Experience</a></li>
                 <li><a href="#projects" onclick="toggleMenu()">Projects</a></li>
                 <li><a href="#contacts" onclick="toggleMenu()">Contact</a></li>
@@ -114,9 +118,63 @@
             </div>
         </div>
 
+        <img src="./assets/arrow.png" alt="arrow" class="icon arrow" onclick="location.href='./#work'">
+
+    </section>
+
+    <section id="work">
+        <p class ="section__text__p1">Learn about my</p>
+        <h1 class ="title">Work History</h1>
+
+        <div class="timeline">
+            <div class="timeline-line"></div>
+            <div class="details-container line-left">
+                <div class="title-container">
+                    <img src="./assets/techblazers.jpg" alt="arrow" class="icon">
+                    <div class="work-details-container">
+                        <h2 class="work-title">Robotics Instructor</h2>
+                        <p>Techblazers Academy</p>
+                    </div>
+                </div>
+                
+                <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+
+            <div class="details-container line-right">
+                <div class="title-container">
+                    <img src="./assets/techblazers.jpg" alt="arrow" class="icon">
+                    <div class="work-details-container">
+                        <h2 class="work-title">Robotics Instructor</h2>
+                        <p>Techblazers Academy</p>
+                    </div>
+                </div>
+                
+                <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+
+            <div class="details-container line-left">
+                <div class="title-container">
+                    <img src="./assets/techblazers.jpg" alt="arrow" class="icon">
+                    <div class="work-details-container">
+                        <h2 class="work-title">Robotics Instructor</h2>
+                        <p>Techblazers Academy</p>
+                    </div>
+                </div>
+                
+                <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+
+
+        </div>
+
+
         <img src="./assets/arrow.png" alt="arrow" class="icon arrow" onclick="location.href='./#experience'">
 
     </section>
+    
 
     <section id ="experience">
         <p class ="section__text__p1">Explore My</p>
@@ -364,7 +422,7 @@
                         <textarea id ="message" placeholder="Write a message here!"></textarea>
                     </div>
 
-                    <input class="btn-color-2" type="submit" value="Submit">
+                    <input class="btn-color-2" type="submit" value="Submit" onclick="sendEmail()">
                 </form>
                 <br></br>
 
@@ -377,7 +435,7 @@
                     </div>
                     <div class="contact-details-container">
                         <img src="./assets/email.png" alt="email" class="icon">
-                        (647)-769-5662
+                        <a href="tel:647-769-5662">(647)-769-5662</a>
                     </div>
                 </div>
             </div>
@@ -390,6 +448,7 @@
             <div class="nav-links-container">
                 <ul class="nav-links">
                     <li><a href="#about">About</a></li> <!-- the # will allow us to link to other parts of the site-->
+                    <li><a href="#work">Work</a></li>
                     <li><a href="#experience">Experience</a></li>
                     <li><a href="#projects">Projects</a></li>
                     <li><a href="#contact">Contact</a></li>

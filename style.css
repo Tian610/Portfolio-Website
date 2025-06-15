@@ -5,7 +5,7 @@
 * {
     margin: 0;
     padding: 0;
-    background-color: white;
+    /* background-color: white; */
 }
 
 body {
@@ -152,8 +152,8 @@ a:hover {
 
 section {
     padding: top 4vh;
-    height: 80vh;
-    margin: 0 15rem;
+    max-width: 100vh;
+    margin: 10rem auto;
     box-sizing: border-box;
     min-height: fit-content;
 }
@@ -262,7 +262,6 @@ section {
 
 /* About */
 
-
 #about {
     position:relative;
 }
@@ -292,16 +291,18 @@ section {
 }
 
 .details-container {
+    position: relative;
     padding: 1.5rem;
     flex: 1;
-    background: white;
     border-radius: 2rem;
     border: rgb(53,53,53) 0.1rem solid;
     border-color: rgb(163,163,163);
     text-align: center;
+    background-color: rgba(255,255,255,0.3);
 }
 
 .section-container {
+    padding-top: 2rem;
     gap: 4rem;
     height: 80%;
 }
@@ -311,6 +312,75 @@ section {
     width: 400px;
     margin: auto 0;
 
+}
+
+/* Work */
+
+#work {
+    position: relative;
+}
+
+.timeline {
+    margin-top: 2rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 3rem;
+    /* Ensures the timeline-line stretches to fit all children */
+    min-height: 100%;
+}
+
+.timeline-line {
+    position: absolute;
+    left: 50%;
+    width: 4px;
+    height: 100%;
+    background: #000000;
+    transform: translateX(-50%);
+    z-index: 0;
+    border-radius: 2px;
+}
+
+.line-left {
+    translate: -50%;
+    margin-right: 5rem;
+    text-align: right;
+}
+
+.line-right {
+    translate: 50%;
+    margin-left: 5rem;
+    text-align: left;
+}
+
+.timeline .details-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+}
+
+.title-container {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.title-container .icon {
+    scale: 1.5;
+    border-radius: 0.5rem;
+}
+
+.work-details-container {
+    text-align: initial;
+}
+
+.work-title {
+    font-weight: 600;
+    font-size: 1.75rem;
 }
 
 /* Experience */
@@ -360,7 +430,7 @@ article .icon {
 
 .color-container {
     border-color: rgb(163,163,163);
-    background-color: rgb(255,255,255);
+    background-color: rgba(255,255,255,0.3);
 }
 
 .details-container {
@@ -413,6 +483,7 @@ article .icon {
     border-radius: 2rem;
     border: rgb(53,53,53) 0.1rem solid;
     border-color: rgb(163,163,163);
+    background-color: rgba(255,255,255,0.3);
 }
 
 form {
@@ -471,6 +542,10 @@ textarea {
     cursor: default;
 }
 
+.contact-details-container a:hover {
+    transform: scale(1.03);
+}
+
 
 /* Footer */
 
@@ -482,3 +557,38 @@ footer {
 footer p {
     text-align: center;
 }
+
+.animated-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(
+        120deg,
+        #e0eafc 0%,
+        #cfd9df 25%,
+        #c0d7fc 50%,
+        #b6cee8 75%,
+        #f2f6fc 100%
+    );
+    background-size: 200% 200%;
+    animation: flowingColors 16s ease-in-out infinite;
+    opacity: 1;
+}
+
+@keyframes flowingColors {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Extras */
