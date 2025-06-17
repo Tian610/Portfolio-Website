@@ -42,5 +42,5 @@ document.querySelectorAll('.details-container').forEach(container => {
 });
 
 function sendEmail() {
-    
+    np
 }
