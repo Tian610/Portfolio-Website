@@ -589,26 +589,27 @@ textarea {
 }
 
 
+/* Extras */
+
 .animated-bg {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: -1;
+    z-index: -2;
     pointer-events: none;
     background: linear-gradient(
         120deg,
-        #e0eafc 0%,
-        #cfd9df 25%,
-        #c0d7fc 50%,
-        #b6cee8 75%,
-        #f2f6fc 100%
+        #ff003c 0%,
+        #e25578 25%,
+        #3a86ff 100%
     );
     background-size: 200% 200%;
     animation: flowingColors 16s ease-in-out infinite;
     opacity: 1;
 }
+
 
 @keyframes flowingColors {
     0% {
@@ -622,4 +623,14 @@ textarea {
     }
 }
 
-/* Extras */
+.mica-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    background: rgba(30,30,30,0.18); /* or try rgba(30,30,30,0.18) for a darker effect */
+    backdrop-filter: blur(500px) saturate(180%);
+    z-index: -1;
+}
