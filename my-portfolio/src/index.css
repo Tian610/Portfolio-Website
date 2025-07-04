@@ -577,6 +577,27 @@ textarea {
     transform: scale(1.03);
 }
 
+.thingy {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+}
+
+.animate-status {
+    animation: fadeInUp 0.7s cubic-bezier(.39,.575,.565,1) both;
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Footer */
 
 .footer {
@@ -586,51 +607,4 @@ textarea {
 
 .footer p {
     text-align: center;
-}
-
-
-/* Extras */
-
-.animated-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -2;
-    pointer-events: none;
-    background: linear-gradient(
-        120deg,
-        #ff003c 0%,
-        #e25578 25%,
-        #3a86ff 100%
-    );
-    background-size: 200% 200%;
-    animation: flowingColors 16s ease-in-out infinite;
-    opacity: 1;
-}
-
-
-@keyframes flowingColors {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-.mica-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    background: rgba(30,30,30,0.18); /* or try rgba(30,30,30,0.18) for a darker effect */
-    backdrop-filter: blur(500px) saturate(180%);
-    z-index: -1;
 }

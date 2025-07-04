@@ -1,7 +1,8 @@
 import React from "react";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 import './mediaquries.css';
+import './background.css';
 import Navbar from "./components/Navbar";
 import Profile from "./components/Profile";
 import About from "./components/About";
@@ -12,14 +13,6 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
 function App() {
-
-  const canvasRef = useRef(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-
-  }, []);
 
   useEffect(() => {
     // Intersection Observer for slide-in
@@ -65,18 +58,7 @@ function App() {
   return (
     
     <>
-      <canvas
-        ref={canvasRef}
-        width={window.innerWidth}
-        height={window.innerHeight}
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          zIndex: -2,
-          pointerEvents: "none"
-        }}
-      />
+      <div class="bg"></div>
       <div class="mica-overlay"></div>
       <Navbar />
       <Profile />

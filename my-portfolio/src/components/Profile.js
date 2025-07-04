@@ -18,7 +18,7 @@ function Profile() {
                     
                     {/* <!-- Buttons for Resume and Contact --> */}
                     <div class ="btn-container">
-                        <button class ="btn-color-2" onClick={() => window.location.href = require("../assets/resume-example.pdf")}>Resume/CV</button>
+                        <button class ="btn-color-2" onClick={() => window.location.href = require("../assets/Tian Chen Resume.pdf")}>Resume/CV</button>
 
                         <button class ="btn-color-1" onClick={() => window.location.href = "./#contact"}>Contact Info</button>
                     </div>

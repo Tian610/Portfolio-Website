@@ -3,10 +3,12 @@ import aboutPic from "../assets/about-pic.png";
 import educationIcon from "../assets/education.png";
 import experienceIcon from "../assets/experience.png";
 import arrowIcon from "../assets/arrow.png";
+import { Canvas } from "@react-three/fiber";
 
 function About() {
     return (
         <section id="about">
+            <ThreeCanvas />
             <p className="section__text__p1">Get To Know More</p>
             <h1 className="title">About Me</h1>
 
@@ -53,3 +55,21 @@ function About() {
 }
 
 export default About;
+
+function Box() {
+  return (
+    <mesh rotation={[0.4, 0.2, 0]}>
+      <boxGeometry args={[1, 1, 1]} />
+      <meshNormalMaterial />
+    </mesh>
+  );
+}
+
+function ThreeCanvas() {
+  return (
+    <Canvas style={{ width: "100%", height: "400px" }}>
+      <ambientLight />
+      <Box />
+    </Canvas>
+  );
+}
