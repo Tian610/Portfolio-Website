@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"; // 1. Import useNavigate
 import project1 from "../assets/project-1.png";
 import project2 from "../assets/project-2.jpg";
 import project3 from "../assets/project-3.png";
+import project4 from "../assets/project-4.png";
 import arrowIcon from "../assets/arrow.png";
 
 function Projects() {
@@ -49,6 +50,16 @@ function Projects() {
                                 <button className="btn btn-color-2 project-btn" onClick={() => window.open('https://github.com/Tian610/Spotify-Tracker', '_blank')}>GitHub</button>
                                 {/* 3. Update the onClick handler */}
                                 <button className="btn btn-color-2 project-btn" onClick={() => navigate('/under-construction')}>Demo</button>
+                            </div>
+                        </div>
+                        <div className="details-container color-container">
+                            <div className="article-container">
+                                <img src={project4} alt="Project 4" className="project-img" />
+                            </div>
+                            <h2 className="experience-sub-title project-title">FPGA CPU</h2>
+                            <p>A RISC inspired CPU developed in SystemVerilog.</p>
+                            <div className="btn-container">
+                                <button className="btn btn-color-2 project-btn" onClick={() => window.open('https://github.com/Tian610/CPEN-Year-2/tree/main/CPEN%20211/Labs/Lab%207', '_blank')}>GitHub</button>
                             </div>
                         </div>
                     </div>

@@ -280,6 +280,7 @@ section {
 
 .about-containers, .about-details-container {
     display:flex;
+    flex-wrap: wrap;
 }
 
 .about-pic {
@@ -632,5 +633,5 @@ b {
 }
 
 .color-container p {
-    margin-bottom: 2rem;
+    min-height: 5rem;
 }

@@ -34,7 +34,7 @@ function Work() {
                             <img src={tntnIcon} alt="Techblazers Academy" className="icon" />
                             <div className="work-details-container">
                                 <h2 className="work-title">Team Member</h2>
-                                <p>TNTN Robotic Team</p>
+                                <p>TNTN Robotics Team</p>
                             </div>
                         </div>
                         <ul className="work-description">
