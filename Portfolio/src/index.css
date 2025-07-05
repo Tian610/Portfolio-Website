@@ -438,8 +438,9 @@ section {
     text-align: initial;
     flex-wrap: wrap;
     flex-direction: row;
-    gap: 2.5rem;
+    gap: 1.5rem;
     justify-content: space-around;
+    padding-bottom: 1rem;
 }
 
 article {
@@ -607,4 +608,29 @@ textarea {
 
 .footer p {
     text-align: center;
+}
+
+.text-divider {
+  margin: 0.5rem 0; /* Adds space above and below the line */
+  border: none;
+  height: 1px;
+}
+
+.work-description {
+    color: rgb(85,85,85);
+    list-style-type: disc;
+    padding-left: 20px;
+    text-align: left;
+}
+
+.work-description li {
+    margin-bottom: 0.5rem;
+}
+
+b {
+    color: rgb(190, 57, 79);
+}
+
+.color-container p {
+    margin-bottom: 2rem;
 }

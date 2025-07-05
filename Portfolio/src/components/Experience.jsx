@@ -8,19 +8,28 @@ function Experience() {
     const frontendSkills = [
         { title: "HTML", level: "Experienced" },
         { title: "CSS", level: "Experienced" },
-        { title: "JavaScript", level: "Experienced" },
+        { title: "JavaScript", level: "Intermediate" },
         { title: "React", level: "Intermediate" },
         { title: "TypeScript", level: "Intermediate" },
-        { title: "Redux", level: "Intermediate" },
+        { title: "C#", level: "Intermediate" },
     ];
 
     const backendSkills = [
         { title: "Node.js", level: "Intermediate" },
-        { title: "Express", level: "Intermediate" },
-        { title: "MongoDB", level: "Intermediate" },
+        { title: "Java", level: "Experienced" },
         { title: "Python", level: "Experienced" },
+        { title: "Spring", level: "Intermediate" },
         { title: "C++", level: "Experienced" },
         { title: "SQL", level: "Intermediate" },
+    ];
+
+    const ceSkills = [
+        { title: "ARM64", level: "Intermediate" },
+        { title: "Verilog", level: "Experienced" },
+        { title: "FPGA", level: "Intermediate" },
+        { title: "Linux", level: "Intermediate" },
+        { title: "C", level: "Experienced" },
+        { title: "TCP/IP", level: "Intermediate" },
     ];
 
     return (
@@ -47,7 +56,20 @@ function Experience() {
                         <div class="details-container">
                             <h2 class="experience-sub-title">Backend Development</h2>
                             <div className="article-container">
-                                {frontendSkills.map((skill, idx) => (
+                                {backendSkills.map((skill, idx) => (
+                                    <ExperienceBullet
+                                    key={skill.title}
+                                    icon={checkmarkIcon}
+                                    title={skill.title}
+                                    level={skill.level}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                        <div class="details-container">
+                            <h2 class="experience-sub-title">Computer Engineering</h2>
+                            <div className="article-container">
+                                {ceSkills.map((skill, idx) => (
                                     <ExperienceBullet
                                     key={skill.title}
                                     icon={checkmarkIcon}

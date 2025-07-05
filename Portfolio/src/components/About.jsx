@@ -4,17 +4,41 @@ import educationIcon from "../assets/education.png";
 import experienceIcon from "../assets/experience.png";
 import arrowIcon from "../assets/arrow.png";
 import { Canvas } from "@react-three/fiber";
+import Terrain from "./Terrain";
+import Lights from "./Lights";
+import { OrbitControls } from "@react-three/drei";
+
+function ThreeCanvas() {
+  return (
+    <div style={{ width: "400px", height: "400px"}}>
+        <Canvas 
+          camera={{ position: [0, 25, 25], fov: 55 }}
+          // 1. Enable transparency on the renderer
+          gl={{ alpha: true }}
+          // 2. Tell the scene to use a transparent background
+          onCreated={({ scene }) => {
+            scene.background = null;
+          }}
+        >
+          <>
+            <OrbitControls /> 
+            <Lights />
+            <Terrain />
+          </>
+        </Canvas>
+      </div>
+  );
+}
 
 function About() {
     return (
         <section id="about">
-            <ThreeCanvas />
             <p className="section__text__p1">Get To Know More</p>
             <h1 className="title">About Me</h1>
 
             <div className="section-container">
                 <div className="section__pic-container">
-                    <img src={aboutPic} alt="Profile Picture" className="about-pic" />
+                      <ThreeCanvas />
                 </div>
 
                 <div className="about-details-container">
@@ -23,22 +47,28 @@ function About() {
                         <div className="details-container slide-in">
                             <img src={educationIcon} alt="Education Icon" className="icon" />
                             <h3>Education</h3>
-                            <p>2nd Year Student <br />University of British Columbia</p>
+                            <p>3rd Year Student <br />University of British Columbia</p>
                         </div>
                         
                         <div className="details-container slide-in">
                             <img src={experienceIcon} alt="Experience Icon" className="icon" />
                             <h3>Experience</h3>
-                            <p>4+ years <br />Robotics Programmer</p>
+                            <p>VEXU Robotics<br />World Champion</p>
                         </div>
                     </div>
 
                     <div className="text-container">
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            I'm a Computer Engineering student at UBC dedicated to improving the world through technology. As a skilled developer versed in C++, Java, Python,
+                            and JavaScript, alongside further experience in developing <b>World Champion</b> Robots for VEXU competition, I'm confident in my ability to make 
+                            a difference.
+                        </p>
+
+                        <hr className="text-divider" />
+
+                        <p>
+                            Outside of school, you'll probably find me working on my art, writing stories, and enjoying my time with friends. I love meeting new people and
+                            and am always open to new ideas! Please don't hesitate to reach out to me with news about new opportunities, or even if you just want to chat!
                         </p>
                     </div>
                 </div>
@@ -55,21 +85,3 @@ function About() {
 }
 
 export default About;
-
-function Box() {
-  return (
-    <mesh rotation={[0.4, 0.2, 0]}>
-      <boxGeometry args={[1, 1, 1]} />
-      <meshNormalMaterial />
-    </mesh>
-  );
-}
-
-function ThreeCanvas() {
-  return (
-    <Canvas style={{ width: "100%", height: "400px" }}>
-      <ambientLight />
-      <Box />
-    </Canvas>
-  );
-}

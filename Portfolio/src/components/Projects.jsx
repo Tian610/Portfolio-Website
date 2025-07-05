@@ -17,9 +17,10 @@ function Projects() {
                             <div className="article-container">
                                 <img src={project1} alt="Project 1" className="project-img" />
                             </div>
-                            <h2 className="experience-sub-title project-title">Project One</h2>
+                            <h2 className="experience-sub-title project-title">UBC GradMap</h2>
+                            <p>A full-stack application to enhance the UBC course selection process.</p>
                             <div className="btn-container">
-                                <button className="btn btn-color-2 project-btn" onClick={() => window.location.href='https://www.github.com'}>GitHub</button>
+                                <button className="btn btn-color-2 project-btn" onClick={() => window.location.href='https://github.com/Meriadoc-Gradmap/UBCGradMap'}>GitHub</button>
                                 <button className="btn btn-color-2 project-btn" onClick={() => window.location.href='https://www.github.com'}>Demo</button>
                             </div>
                         </div>
@@ -27,7 +28,7 @@ function Projects() {
                             <div className="article-container">
                                 <img src={project2} alt="Project 2" className="project-img" />
                             </div>
-                            <h2 className="experience-sub-title project-title">Project Two</h2>
+                            <h2 className="experience-sub-title project-title">TNTN Robotics</h2>
                             <div className="btn-container">
                                 <button className="btn btn-color-2 project-btn" onClick={() => window.location.href='https://www.github.com'}>GitHub</button>
                                 <button className="btn btn-color-2 project-btn" onClick={() => window.location.href='https://www.github.com'}>Demo</button>
@@ -37,7 +38,7 @@ function Projects() {
                             <div className="article-container">
                                 <img src={project3} alt="Project 3" className="project-img" />
                             </div>
-                            <h2 className="experience-sub-title project-title">Project Three</h2>
+                            <h2 className="experience-sub-title project-title">Spoti-Stats</h2>
                             <div className="btn-container">
                                 <button className="btn btn-color-2 project-btn" onClick={() => window.location.href='https://www.github.com'}>GitHub</button>
                                 <button className="btn btn-color-2 project-btn" onClick={() => window.location.href='https://www.github.com'}>Demo</button>
