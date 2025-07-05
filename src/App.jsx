@@ -1,16 +1,13 @@
 import React from "react";
 import { useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import './mediaquries.css';
 import './background.css';
 import Navbar from "./components/Navbar";
-import Profile from "./components/Profile";
-import About from "./components/About";
-import Work from "./components/Work";
-import Experience from "./components/Experience";
-import Projects from "./components/Projects";
-import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import Home from "./pages/Home";
+import WIP from "./pages/WIP";
 
 function App() {
 
@@ -58,16 +55,18 @@ function App() {
   return (
     
     <>
-      <div class="bg"></div>
-      <div class="mica-overlay"></div>
-      <Navbar />
-      <Profile />
-      <About />
-      <Work />
-      <Experience />
-      <Projects />
-      <Contact />
-      <Footer />
+      <Router>
+          <div class="bg"></div>
+          <div class="mica-overlay"></div>
+          <Navbar />
+
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/under-construction" element={<WIP />} />
+          </Routes>
+
+          <Footer />
+      </Router>
     </>
 
   );

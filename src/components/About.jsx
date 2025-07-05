@@ -59,7 +59,7 @@ function About() {
 
                     <div className="text-container">
                         <p>
-                            I'm a Computer Engineering student at UBC dedicated to improving the world through technology. As a skilled developer versed in C++, Java, Python,
+                            I'm a <b>Computer Engineering</b> student at UBC dedicated to improving the world through technology. As a skilled developer versed in C++, Java, Python,
                             and JavaScript, alongside further experience in developing <b>World Champion</b> Robots for VEXU competition, I'm confident in my ability to make 
                             a difference.
                         </p>
@@ -67,8 +67,8 @@ function About() {
                         <hr className="text-divider" />
 
                         <p>
-                            Outside of school, you'll probably find me working on my art, writing stories, and enjoying my time with friends. I love meeting new people and
-                            and am always open to new ideas! Please don't hesitate to reach out to me with news about new opportunities, or even if you just want to chat!
+                            Outside of school, you'll probably find me working on my <b>art</b>, writing stories, and enjoying my time with friends. I love meeting new people and
+                            and am always open to new ideas! Please don't hesitate to reach out with news about new opportunities, or if you just want to chat!
                         </p>
                     </div>
                 </div>

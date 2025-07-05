@@ -38,7 +38,7 @@ function Work() {
                             </div>
                         </div>
                         <ul className="work-description">
-                            <li>Earned the World Excellence, Tournament Champion, and Robot Skill Champion Awards, recognizing the top global team out of 109 University teams.</li>
+                            <li>Earned the World Excellence, Tournament Champion, and Robot Skill Champion Awards, recognizing the <b>top global team</b> out of 109 University teams.</li>
                             <li>Developed real-time odometry systems and autonomous paths in C++, integrating IMUs and Optical Tracking Sensors.</li>
                             <li>Authored a comprehensive 150-page technical report detailing hardware, software, and performance metrics.</li>
                         </ul>
