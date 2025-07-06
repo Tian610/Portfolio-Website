@@ -373,10 +373,11 @@ section {
 .left-container {
     display: flex;
     flex-direction: row;
+    justify-content: flex-end;
     gap: 1.5rem;
     align-items: center;
     margin-bottom: 1rem;
-    padding-left: 4rem;
+    padding-right: 1rem;
 }
 
 .left-container p {
