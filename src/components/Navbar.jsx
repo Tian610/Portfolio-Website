@@ -8,7 +8,7 @@ function Navbar() {
                 <div>
                     {/* ul refers to unordered list */}
                     <ul className="nav-links">
-                        <li><a href="#about">About</a></li> {/* the # will allow us to link to other parts of the site*/}
+                        <li><a href="#about">About</a></li>
                         <li><a href="#work">Work</a></li>
                         <li><a href="#experience">Experience</a></li>
                         <li><a href="#projects">Projects</a></li>
