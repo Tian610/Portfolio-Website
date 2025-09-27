@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import WIP from "./pages/WIP";
+import Gallery from "./pages/Gallery";
 
 function App() {
 
@@ -56,13 +57,14 @@ function App() {
     
     <>
       <Router>
-          <div class="bg"></div>
-          <div class="mica-overlay"></div>
+          <div className="bg"></div>
+          <div className="mica-overlay"></div>
           <Navbar />
 
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/under-construction" element={<WIP />} />
+            <Route path="/gallery" element={<Gallery />} />
           </Routes>
 
           <Footer />

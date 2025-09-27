@@ -636,3 +636,26 @@ b {
 .color-container p {
     min-height: 5rem;
 }
+
+.imageGalleryContainer {
+  column-width: 16rem;          /* or use column-width for responsiveness */
+  column-gap: 16px;         /* space between columns */
+  padding: 16px;            /* optional: padding around gallery */
+}
+
+.galleryImage {
+  break-inside: avoid;      /* keep each item in one column */
+  margin-bottom: 16px;      /* space between stacked items */
+}
+
+.galleryImage img {
+  width: 100%;              /* make images expand to column width */
+  border-radius: 8px;       /* optional: rounded corners */
+  display: block;           /* remove extra whitespace under images */
+  cursor: pointer;
+}
+
+#gallery {
+    max-width: 140vh;
+    margin: 10rem auto;
+}

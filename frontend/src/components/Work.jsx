@@ -3,6 +3,7 @@ import techblazersImg from "../assets/techblazers.jpg";
 import arrowIcon from "../assets/arrow.png";
 import yorkIcon from "../assets/york.jpg";
 import tntnIcon from "../assets/tntn.jpg";
+import lumentumIcon from "../assets/lumentum.png";
 
 function Work() {
     return (
@@ -14,6 +15,19 @@ function Work() {
                 <div className="timeline">
                     <div className="timeline-line"></div>
                     
+                    <div className="details-container line-right">
+                        <div className="right-container">
+                            <img src={lumentumIcon} alt="Lumentum Logo" className="icon" />
+                            <div className="work-details-container">
+                                <h2 className="work-title">Embedded Software DevSecOps Engineer</h2>
+                                <p>Lumentum</p>
+                            </div>
+                        </div>
+                        <ul className="work-description" style={{ textAlign: 'center', listStyleType: 'none', paddingLeft: 0 }}>
+                            This part's still under construction, check back later!
+                        </ul>
+                    </div>
+
                     <div className="details-container line-left">
                         <div className="left-container">
                             <div className="work-details-container">
@@ -31,7 +45,7 @@ function Work() {
 
                     <div className="details-container line-right">
                         <div className="right-container">
-                            <img src={tntnIcon} alt="Techblazers Academy" className="icon" />
+                            <img src={tntnIcon} alt="TNTN Logo" className="icon" />
                             <div className="work-details-container">
                                 <h2 className="work-title">Team Member</h2>
                                 <p>TNTN Robotics Team</p>
