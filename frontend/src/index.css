@@ -202,6 +202,11 @@ section {
     margin-bottom: 1rem;
 }
 
+.section__text__p3 {
+    text-align: center;
+    font-size: 1.1rem;
+}
+
 .title {
     font-size: 3rem;
     text-align: center;
@@ -641,11 +646,14 @@ b {
   column-width: 16rem;          /* or use column-width for responsiveness */
   column-gap: 16px;         /* space between columns */
   padding: 16px;            /* optional: padding around gallery */
+  padding-top: 4rem;
 }
 
 .galleryImage {
   break-inside: avoid;      /* keep each item in one column */
   margin-bottom: 16px;      /* space between stacked items */
+  transform-style: preserve-3d;     /* enable 3D transformations */
+  cursor: pointer;          /* show it's interactive */
 }
 
 .galleryImage img {
@@ -658,4 +666,5 @@ b {
 #gallery {
     max-width: 140vh;
     margin: 10rem auto;
+    margin-top: 3rem;
 }

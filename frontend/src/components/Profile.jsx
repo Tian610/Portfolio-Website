@@ -2,6 +2,7 @@ import React from "react";
 import profilePic from "../assets/profile-pic.png";
 import linkedinPic from "../assets/linkedin.png";
 import githubPic from "../assets/github.png";
+import resume from "../assets/Tian Chen Resume.pdf"
 
 
 function Profile() {
@@ -18,7 +19,7 @@ function Profile() {
                     
                     {/* <!-- Buttons for Resume and Contact --> */}
                     <div class ="btn-container">
-                        <button class ="btn-color-2" onClick={() => window.location.href = require("../assets/Tian Chen Resume.pdf")}>Resume/CV</button>
+                        <button class ="btn-color-2" onClick={() => window.open(resume)}>Resume/CV</button>
 
                         <button class ="btn-color-1" onClick={() => window.location.href = "./#contact"}>Contact Info</button>
                     </div>

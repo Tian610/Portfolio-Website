@@ -1,24 +1,42 @@
 import React from "react";
 
-function Navbar() {
+function Navbar({ currentPath }) {
+    const isGalleryPage = currentPath === '/gallery';
+    
     return (
         <>
-            <nav id="desktop-nav">
+            <nav id="desktop-nav" className={isGalleryPage ? 'gallery-nav' : ''}>
                 <div className="logo">Tian Chen</div>
                 <div>
                     {/* ul refers to unordered list */}
                     <ul className="nav-links">
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#work">Work</a></li>
-                        <li><a href="#experience">Experience</a></li>
-                        <li><a href="#projects">Projects</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        {isGalleryPage ? (
+                            // Gallery page navigation
+                            <>
+                                <li><a href="/">Home</a></li>
+                                <li><a href="/#about">About</a></li>
+                                <li><a href="/#work">Work</a></li>
+                                <li><a href="/#experience">Experience</a></li>
+                                <li><a href="/#projects">Projects</a></li>
+                                <li><a href="/#contact">Contact</a></li>
+                            </>
+                        ) : (
+                            // Home page navigation
+                            <>
+                                <li><a href="#about">About</a></li>
+                                <li><a href="#work">Work</a></li>
+                                <li><a href="#experience">Experience</a></li>
+                                <li><a href="#projects">Projects</a></li>
+                                <li><a href="#contact">Contact</a></li>
+                                <li><a href="/gallery">Gallery</a></li>
+                            </>
+                        )}
                     </ul>
                 </div>
             </nav>
 
             {/* Mobile Navigation */}
-            <nav id="hamburger-nav">
+            <nav id="hamburger-nav" className={isGalleryPage ? 'gallery-nav' : ''}>
                 <div className="logo">Tian Chen</div>
                 <div className="hamburger-menu">
                     {/* allows us to run js code on click */}
@@ -28,11 +46,23 @@ function Navbar() {
                         <span></span>
                     </div>
                     <div className="menu-links">
-                        <li><a href="#about" onClick={toggleMenu}>About</a></li>
-                        <li><a href="#work" onClick={toggleMenu}>Work</a></li>
-                        <li><a href="#experience" onClick={toggleMenu}>Experience</a></li>
-                        <li><a href="#projects" onClick={toggleMenu}>Projects</a></li>
-                        <li><a href="#contact" onClick={toggleMenu}>Contact</a></li>
+                        {isGalleryPage ? (
+                            // Gallery page mobile navigation
+                            <>
+                                <li><a href="/" onClick={toggleMenu}>Home</a></li>
+                                <li><a href="/#about" onClick={toggleMenu}>About</a></li>
+                                <li><a href="/#contact" onClick={toggleMenu}>Contact</a></li>
+                            </>
+                        ) : (
+                            // Home page mobile navigation
+                            <>
+                                <li><a href="#about" onClick={toggleMenu}>About</a></li>
+                                <li><a href="#work" onClick={toggleMenu}>Work</a></li>
+                                <li><a href="#experience" onClick={toggleMenu}>Experience</a></li>
+                                <li><a href="#projects" onClick={toggleMenu}>Projects</a></li>
+                                <li><a href="#contact" onClick={toggleMenu}>Contact</a></li>
+                            </>
+                        )}
                     </div>
                 </div>
             </nav>

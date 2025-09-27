@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
 import './mediaquries.css';
 import './background.css';
@@ -59,7 +59,7 @@ function App() {
       <Router>
           <div className="bg"></div>
           <div className="mica-overlay"></div>
-          <Navbar />
+          <NavbarWrapper />
 
           <Routes>
             <Route path="/" element={<Home />} />
@@ -72,6 +72,12 @@ function App() {
     </>
 
   );
+}
+
+// Wrapper component to access location inside Router
+function NavbarWrapper() {
+  const location = useLocation();
+  return <Navbar currentPath={location.pathname} />;
 }
 
 export default App;
