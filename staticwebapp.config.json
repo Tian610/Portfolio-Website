@@ -1,6 +1,30 @@
 {
   "navigationFallback": {
-    "rewrite": "/index.html",
-    "exclude": ["/assets/*", "*.{png,jpg,gif,ico}"]
-  }
+    "rewrite": "/index.html"
+  },
+  "routes": [
+    {
+      "route": "/api/*",
+      "allowedRoles": ["anonymous"]
+    },
+    {
+      "route": "/gallery",
+      "serve": "/index.html",
+      "statusCode": 200
+    },
+    {
+      "route": "/under-construction",
+      "serve": "/index.html", 
+      "statusCode": 200
+    },
+    {
+      "route": "/*",
+      "serve": "/index.html",
+      "statusCode": 200
+    }
+  ],
+  "platform": {
+    "apiRuntime": "node:18"
+  },
+  "trailingSlash": "auto"
 }
