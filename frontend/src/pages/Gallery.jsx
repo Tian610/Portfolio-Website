@@ -4,6 +4,7 @@ import { Center } from "@react-three/drei";
 
 function Gallery() {
     const [images, setImages] = useState([]);
+    const [selectedIndex, setSelectedIndex] = useState(null);
     const storageAccountName = "tiansgallery";
     const containerName = "image-gallery";
 
@@ -59,6 +60,25 @@ function Gallery() {
         };
     }, [images]); // Run this effect when images change
 
+    useEffect(() => {
+    const handleKeyDown = (e) => {
+        if (selectedIndex === null) return;
+
+        if (e.key === "Escape") {
+        setSelectedIndex(null);
+        } else if (e.key === "ArrowRight") {
+        setSelectedIndex((prev) => (prev + 1) % images.length);
+        } else if (e.key === "ArrowLeft") {
+        setSelectedIndex((prev) => (prev - 1 + images.length) % images.length);
+        }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [selectedIndex, images.length]);
+
+
+    
     return (
         <>
             <section id="gallery">
@@ -68,11 +88,51 @@ function Gallery() {
                 </div>
                     <div className="imageGalleryContainer">
                         {images.map((url, idx) => (
-                            <div className="galleryImage" key={idx}>
+                            <div className="galleryImage" key={idx} onClick={() => setSelectedIndex(idx)}>
                                 <img src={url} alt={`blob-${idx}`} />
                             </div>
                         ))}
                     </div>
+                    
+                    {selectedIndex !== null && (
+                        <div className="modalOverlay" onClick={() => setSelectedIndex(null)}>
+                            <img src={images[selectedIndex]} alt="enlarged" className="modalImage" />
+
+                            <div className="imageNavigator">
+                                <button 
+                                className="navButton left" 
+                                onClick={(e) => { e.stopPropagation(); setSelectedIndex((selectedIndex - 1 + images.length) % images.length); }}
+                                >&lt;</button>
+
+                                <div className="thumbnailContainer">
+                                    <img src={images[(selectedIndex - 4 + images.length) % images.length]} alt="previous image" className="thumbnail"
+                                        onClick={(e) => { e.stopPropagation(); setSelectedIndex((selectedIndex - 4 + images.length) % images.length); }}></img>
+                                    <img src={images[(selectedIndex - 3 + images.length) % images.length]} alt="previous image" className="thumbnail"
+                                        onClick={(e) => { e.stopPropagation(); setSelectedIndex((selectedIndex - 3 + images.length) % images.length); }}></img>
+                                    <img src={images[(selectedIndex - 2 + images.length) % images.length]} alt="previous image" className="thumbnail"
+                                        onClick={(e) => { e.stopPropagation(); setSelectedIndex((selectedIndex - 2 + images.length) % images.length); }}></img>
+                                    <img src={images[(selectedIndex - 1 + images.length) % images.length]} alt="previous image" className="thumbnail"
+                                        onClick={(e) => { e.stopPropagation(); setSelectedIndex((selectedIndex - 1 + images.length) % images.length); }}></img>
+                                    <img src={images[(selectedIndex) % images.length]} alt="current image" className="thumbnail active"></img>
+                                    <img src={images[(selectedIndex + 1) % images.length]} alt="next image" className="thumbnail"
+                                        onClick={(e) => { e.stopPropagation(); setSelectedIndex((selectedIndex + 1) % images.length); }}></img>
+                                    <img src={images[(selectedIndex + 2) % images.length]} alt="next image" className="thumbnail"
+                                        onClick={(e) => { e.stopPropagation(); setSelectedIndex((selectedIndex + 2) % images.length); }}></img>
+                                    <img src={images[(selectedIndex + 3) % images.length]} alt="next image" className="thumbnail"
+                                        onClick={(e) => { e.stopPropagation(); setSelectedIndex((selectedIndex + 3) % images.length); }}></img>
+                                    <img src={images[(selectedIndex + 4) % images.length]} alt="next image" className="thumbnail"
+                                        onClick={(e) => { e.stopPropagation(); setSelectedIndex((selectedIndex + 4) % images.length); }}></img>
+
+                                </div>
+                                
+                                <button 
+                                className="navButton right" 
+                                onClick={(e) => { e.stopPropagation(); setSelectedIndex((selectedIndex + 1) % images.length); }}
+                                >&gt;</button>
+                            </div>
+                            
+                        </div>
+                        )}
             </section>
         </>
     )

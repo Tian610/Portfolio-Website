@@ -657,14 +657,97 @@ b {
 }
 
 .galleryImage img {
-  width: 100%;              /* make images expand to column width */
-  border-radius: 8px;       /* optional: rounded corners */
-  display: block;           /* remove extra whitespace under images */
-  cursor: pointer;
+    width: 100%;              /* make images expand to column width */
+    border-radius: 8px;       /* optional: rounded corners */
+    display: block;           /* remove extra whitespace under images */
+    cursor: pointer;
+    transition: opacity 0.3s ease, transform 0.2s ease;
 }
 
 #gallery {
     max-width: 140vh;
     margin: 10rem auto;
     margin-top: 3rem;
+}
+
+/* Modal overlay background */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  cursor: zoom-out; /* hint to click to close */
+}
+
+/* Enlarged image */
+.modalImage {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 12px;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+  animation: fadeInScale 0.3s ease;
+}
+
+/* Animation for smooth pop-in */
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.navButton {
+  top: 50%;
+  font-size: 3rem;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 15px;
+  user-select: none;
+  z-index: 1001;
+}
+
+.imageNavigator {
+    display: flex;
+    flex-direction: row;
+}
+
+.thumbnail {
+    width: 60px;              /* Fixed small width */
+    height: 60px;             /* Fixed small height */
+    aspect-ratio: 1;          /* perfect 1:1 square */
+    object-fit: cover;        /* crop to fill the space while maintaining aspect ratio */
+    border-radius: 5px;
+    cursor: pointer;          /* show they're clickable */
+    opacity: 0.7;             /* make non-active thumbnails slightly transparent */
+    transition: opacity 0.3s ease, transform 0.2s ease;
+}
+
+.thumbnail:hover {
+    opacity: 1;
+    transform: scale(1.1);    /* slight zoom on hover */
+}
+
+.thumbnail.active {
+    opacity: 1;
+    border: 2px solid #be394f;  /* highlight the current image */
+}
+
+.thumbnailContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;                 /* smaller gap between thumbnails */
+    margin-top: 1rem;         /* space above thumbnails */
+    padding: 10px;            /* padding around container */
+    background-color: rgba(0, 0, 0, 0.3);  /* subtle background */
+    border-radius: 8px;       /* rounded container */
+    backdrop-filter: blur(5px); /* subtle blur effect */
 }
