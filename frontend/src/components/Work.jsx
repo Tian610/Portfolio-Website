@@ -23,8 +23,11 @@ function Work() {
                                 <p>Lumentum</p>
                             </div>
                         </div>
-                        <ul className="work-description" style={{ textAlign: 'center', listStyleType: 'none', paddingLeft: 0 }}>
-                            This part's still under construction, check back later!
+                        <ul className="work-description">
+                            <li>Gained hands-on experience with large-scale CI/CD infrastructure, release engineering workflows, and <b>Linux development</b></li>
+                            <li>Leveraged <b>AI-based static analysis tools</b> to automatically flag code vulnerabilities and quality issues before release.</li>
+                            <li>Developed a full-stack analytics dashboard integrating with internal build systems and <b>GitHub</b> workflows to visualize release history, test trends, and pipeline statistics beyond standard GitHub capabilities.</li>
+                            <li>Optimized <b>SONiC</b> build pipelines by streamlining <b>Docker</b> layers, caching dependencies, and parallelizing workflows, resulting in up to a 75\% reduction in build times.</li>
                         </ul>
                     </div>
 
