@@ -12,9 +12,7 @@ body {
     font-family: "Montserrat", sans-serif;
 }
 
-html {
-    scroll-behavior: smooth;
-}
+/* html scroll-behavior removed for Lenis smooth scrolling */
 
 p {
     color: rgb(85,85,85);

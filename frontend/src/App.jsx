@@ -1,6 +1,7 @@
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { useLenis } from './hooks/useLenis';
 
 import './mediaquries.css';
 import './background.css';
@@ -11,6 +12,8 @@ import WIP from "./pages/WIP";
 import Gallery from "./pages/Gallery";
 
 function App() {
+  // Initialize Lenis smooth scrolling
+  const { lenis, scrollTo, scrollToTop, scrollToElement } = useLenis();
 
   useEffect(() => {
     // Intersection Observer for slide-in
