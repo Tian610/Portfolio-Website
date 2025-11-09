@@ -32,7 +32,7 @@ function Profile() {
 
             <section id="profile">
                     { /* Scrolling*/}
-                    <div className="scrolling-container">
+                    <div className={`scrolling-container ${isScrolled ? 'hidden' : ''}`}>
                         <div className="scrolling-line scroll-right">
                             <span>Engineer • Artist • Creator • Innovator • Engineer • Arist • Creator • Innovator • </span>
                             <span>Engineer • Artist • Creator • Innovator • Engineer • Arist • Creator • Innovator • </span>

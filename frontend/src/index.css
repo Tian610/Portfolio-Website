@@ -103,6 +103,15 @@ h2 {
     flex-direction: column;
     justify-content: center;
     gap: 2rem;
+    opacity: 1;
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    transform: translateY(0);
+}
+
+.scrolling-container.hidden {
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
 }
 
 /* Individual scrolling line */
@@ -153,22 +162,27 @@ h2 {
 }
 
 .profile-snippet {
-    display: flex;
-    
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    width: 100%;
+    max-width: 1200px;
+    align-items: start;
 }
 
-/* Title Container Component */
+/* Title Container Component - Sticky */
 .title-container {
     display: flex;
-    max-width: 20vh;
     align-items: stretch;
     gap: 1.5rem;
-    padding-right: 10rem;
-    
+    position: sticky;
+    top: 50vh;
+    max-width: min-content;
 }
 
 .title-container .vertical-line {
     width: 4px;
+    height: 100;
     background: linear-gradient(180deg, #3b82f6, #8b5cf6);
     border-radius: 2px;
     flex-shrink: 0;
@@ -182,13 +196,26 @@ h2 {
     font-size: 2.5rem;
     transform: scaleX(1.2);
     padding-left: 1rem;
-    margin: 0;
     letter-spacing: 0.05em;
+}
+
+/* Scrollable text sections */
+.profile-text-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    padding: 50vh 0; /* Add padding to create scroll space */
+    justify-self: start;
 }
 
 .profile-section-text {
     font-family: Montserrat;
     color: white;
-    align-self: flex-end;
-    font-size: large;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    max-width: 500px;
+    padding: 2rem 0;
+    min-height: 100vh; /* Each text section takes full viewport height */
+    display: flex;
+    align-items: center;
 }

@@ -6,6 +6,7 @@ import { useLenis } from './hooks/useLenis';
 import Home from "./pages/Home";
 import WIP from "./pages/WIP";
 import Gallery from "./pages/Gallery";
+import PerlinBackground from "./components/PerlinBackground";
 
 function App() {
   // Initialize Lenis smooth scrolling
@@ -13,6 +14,7 @@ function App() {
 
   return (
     <div>
+      <PerlinBackground />
       <Router>
           <Routes>
             <Route path="/" element={<Home />} />
