@@ -1,8 +1,149 @@
-@import "tailwindcss";
-
-/* Local Panchang Font */
 @import url('./fonts/css/panchang.css');
 
-h1 {
-    font-family: Panchang-Medium;
+/* Profile content overlay */
+.profile-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
 }
+
+/* Navigation header - hidden by default */
+.nav-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    padding: 1rem 2rem;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease-in-out;
+}
+
+.nav-header.visible {
+    transform: translateY(0);
+}
+
+.nav-header h1 {
+    font-family: Panchang-Bold;
+    color: white;
+    text-transform: uppercase;
+    font-size: 2rem;
+    margin: 0;
+    cursor: pointer;
+}
+
+/* Main title transitions */
+.main-title {
+    transition: all 0.5s ease-in-out;
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.main-title.scrolled {
+    opacity: 0;
+    transform: translateY(-100px) scale(0.5);
+}
+
+/* When scrolling back up - slide in from top */
+.main-title:not(.scrolled) {
+    animation: slideInFromTop 0.6s ease-out;
+}
+
+@keyframes slideInFromTop {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h1 {
+    font-family: Panchang-Bold;
+    color: white;
+    text-transform: uppercase;
+    font-size: 9rem;
+    margin: 0;
+}
+
+h2 {
+    font-family: Panchang-Bold;
+    color: white;
+    text-transform: uppercase;
+    font-size: 4rem;
+    margin: 0;
+}
+
+.title-footer {
+    font-family: Akeila;
+    color: white;
+    font-size: 2rem;
+    font-weight: bolder;
+    letter-spacing: 0.1rem;
+}
+
+/* Scrolling text container */
+.scrolling-container {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: -1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+}
+
+/* Individual scrolling line */
+.scrolling-line {
+    white-space: nowrap;
+    font-family: Panchang-Bold;
+    font-size: 6rem;
+    color: rgba(255, 255, 255, 0.1);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    display: flex;
+}
+
+/* First line - scrolls left to right */
+.scroll-right {
+    animation: scrollRight 20s linear infinite;
+}
+
+/* Second line - scrolls right to left */
+.scroll-left {
+    animation: scrollLeft 22s linear infinite;
+}
+
+/* Keyframes for seamless right scrolling */
+@keyframes scrollRight {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+/* Keyframes for seamless left scrolling */
+@keyframes scrollLeft {
+    from {
+        transform: translateX(-50%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+

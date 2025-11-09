@@ -98,3 +98,11 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Akeila';
+  src: url('../fonts/Akeila.otf') format('otf'),
+       url('../fonts/Akeila.ttf') format('truetype');
+  font-display: swap;
+  font-style: normal;
+}
+

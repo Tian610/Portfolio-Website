@@ -15,6 +15,7 @@ export default {
         'panchang-bold': ['Panchang-Bold', 'sans-serif'],
         'panchang-extrabold': ['Panchang-Extrabold', 'sans-serif'],
         'panchang-variable': ['Panchang-Variable', 'sans-serif'],
+        'akeila': ['Akeila', 'serif'],
       },
     },
   },
