@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import profilePic from "../assets/profile-pic.png";
 import linkedinPic from "../assets/linkedin.png";
 import githubPic from "../assets/github.png";
-import resume from "../assets/Tian Chen Resume.pdf"
+import resume from "../assets/Tian Chen Resume.pdf";
+import TitleContainer from "./ProfileSnippet";
 
 
 function Profile() {
@@ -30,7 +31,6 @@ function Profile() {
             </nav>
 
             <section id="profile">
-                <div className="profile-container">
                     { /* Scrolling*/}
                     <div className="scrolling-container">
                         <div className="scrolling-line scroll-right">
@@ -48,19 +48,11 @@ function Profile() {
                     <div className="profile-content">
                         <div className={`main-title ${isScrolled ? 'scrolled' : ''}`}>
                             <h1>Tian Chen</h1>
-                            <div className="title-footer">Portfolio 2025</div>
+                            <div className="title-footer">PORTFOLIO 2025</div>
                         </div>
                         
                     </div>
-                </div>
             </section>
-
-            {/* Content spacer to enable scrolling */}
-            <div className="about-container">
-                <div className="title-container">
-                    <h2>Who Am I?</h2>
-                </div>
-            </div>
         </>
     );
 }
