@@ -25,11 +25,6 @@ function Profile() {
     
     return (
         <>  
-            {/* Navigation Header - appears when scrolled */}
-            <nav className={`nav-header ${isScrolled ? 'visible' : ''}`}>
-                <h1 onClick={scrollToTop}>Tian Chen</h1>
-            </nav>
-
             <section id="profile">
                     { /* Scrolling*/}
                     <div className={`scrolling-container ${isScrolled ? 'hidden' : ''}`}>
@@ -50,7 +45,11 @@ function Profile() {
                             <h1>Tian Chen</h1>
                             <div className="title-footer">PORTFOLIO 2025</div>
                         </div>
-                        
+
+                        <div className={`scroll-hint ${isScrolled ? 'scrolled' : ''}`}>
+                            <div className="scroll-up"></div>
+                            <h2>Scroll to Explore</h2>
+                        </div>
                     </div>
             </section>
         </>

@@ -6,23 +6,77 @@
     position: relative;
     z-index: 1;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
     text-align: center;
 }
 
+/* Scroll hint positioned at bottom */
+.scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 0.5rem;
+    opacity: 1;
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    transform: translateY(0);
+}
+
+.scroll-hint.scrolled {
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+}
+
+.scroll-hint h2 {
+    font-family: Akeila;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bolder;
+    letter-spacing: 0.1rem;
+    transform: translateY(0.35rem);
+    max-width: min-content;
+    text-align: left;
+}
+
+.scroll-up {
+    width: 4px;
+    height: 100;
+    background: linear-gradient(190deg, #3b82f6, #8b5cf6);
+    border-radius: 2px;
+    align-self: stretch;
+    animation: scroll-up 1.5s ease-in-out infinite;
+}
+
+@keyframes scroll-up {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-0.5rem);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
 /* Navigation header - hidden by default */
 .nav-header {
     position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
-    backdrop-filter: blur(10px);
+    box-sizing: border-box;
     z-index: 100;
     padding: 1rem 2rem;
     transform: translateY(-100%);
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.5s ease-in-out;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .nav-header.visible {
@@ -37,6 +91,27 @@
     margin: 0;
     cursor: pointer;
 }
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.nav-link {
+    font-family: Panchang-Bold;
+    background: none;
+    border: none;
+    color: white;
+    letter-spacing: 0.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.nav-link:hover {
+    transform: scale(1.1);
+}   
 
 /* Main title transitions */
 .main-title {

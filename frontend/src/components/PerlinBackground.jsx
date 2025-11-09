@@ -12,8 +12,8 @@ const PerlinBackground = () => {
 
         //Editable values - Optimized for performance
         let showFPS = false;
-        let MAX_FPS = 10; // Cap at 30fps for better performance
-        let thresholdIncrement = 10; // Increased from 5 to reduce lines
+        let MAX_FPS = 20; // Cap at 30fps for better performance
+        let thresholdIncrement = 5; // Increased from 5 to reduce lines
         let thickLineThresholdMultiple = 2;
         let res = 16; // Increased from 8 to reduce grid density
         let baseZOffset = 0.001; // Slightly faster animation
