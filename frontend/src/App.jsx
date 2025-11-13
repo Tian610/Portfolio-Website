@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import WIP from "./pages/WIP";
 import Gallery from "./pages/Gallery";
 import PerlinBackground from "./components/PerlinBackground";
+import ScrollProgress from "./components/ScrollProgress";
 
 function App() {
   // Initialize Lenis smooth scrolling
@@ -16,6 +17,7 @@ function App() {
     <div className="app-container">
       <div className="gradient-background"></div>
       <PerlinBackground />
+      <ScrollProgress />
       <Router>
           <Routes>
             <Route path="/" element={<Home />} />
