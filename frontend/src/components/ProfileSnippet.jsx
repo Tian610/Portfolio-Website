@@ -1,8 +1,10 @@
 import React from "react";
 
-function ProfileSnippet({ title, body }) {
+function ProfileSnippet({ title, titles, body }) {
     // Handle both array and single string for body
     const bodyArray = Array.isArray(body) ? body : [body];
+    // Handle titles array - if not provided, use empty array
+    const titlesArray = Array.isArray(titles) ? titles : [];
 
     return (
         <div className="profile-snippet">
@@ -12,8 +14,14 @@ function ProfileSnippet({ title, body }) {
             </div>
             <div className="profile-text-sections">
                 {bodyArray.map((text, index) => (
-                    <div key={index} className="profile-section-text">
-                        {text}
+                    <div key={index} className="profile-section">
+                        {titlesArray[index] && (
+                            <h3 className="section-title">{titlesArray[index]}</h3>
+                        )}
+                        <div 
+                            className="profile-section-text"
+                            dangerouslySetInnerHTML={{ __html: text }}
+                        />
                     </div>
                 ))}
             </div>

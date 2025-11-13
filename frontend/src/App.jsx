@@ -13,7 +13,8 @@ function App() {
   const { lenis, scrollTo, scrollToTop, scrollToElement } = useLenis();
 
   return (
-    <div>
+    <div className="app-container">
+      <div className="gradient-background"></div>
       <PerlinBackground />
       <Router>
           <Routes>
