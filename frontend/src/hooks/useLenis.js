@@ -15,6 +15,7 @@ export const useLenis = () => {
       smoothTouch: false,
       touchMultiplier: 2,
       infinite: false,
+      syncTouch: true,
     });
 
     lenisRef.current = lenis;

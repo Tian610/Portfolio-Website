@@ -39,46 +39,112 @@ function Projects() {
     const { lenis } = useLenis();
 
     useEffect(() => { 
-        if (!lenis) return;
+        const container = containerRef.current;
+        const horizontal = horizontalRef.current;
+        if (!container || !horizontal) return;
 
-        const handleScroll = () => {
-            if (!containerRef.current || !horizontalRef.current) return;
+        // Precompute ranges and keep them fresh on resize
+        let windowHeight = window.innerHeight;
+        let windowWidth = window.innerWidth;
+        let scrollableHeight = Math.max(1, container.scrollHeight - windowHeight);
+        let maxTranslateX = Math.max(0, horizontal.scrollWidth - windowWidth);
+        let maxTranslateY = Math.round(windowHeight * 0.3);
 
-            const container = containerRef.current;
-            const horizontal = horizontalRef.current;
-            const containerRect = container.getBoundingClientRect();
-            const windowHeight = window.innerHeight;
-            
-            // Check if projects section is in view
-            if (containerRect.top <= 0 && containerRect.bottom >= windowHeight) {
-                // Calculate smooth scroll progress using Lenis scroll position
-                const scrollableHeight = container.scrollHeight - windowHeight;
-                const currentScroll = Math.max(0, -containerRect.top);
-                const progress = Math.min(Math.max(currentScroll / scrollableHeight, 0), 1);
+        const recompute = () => {
+            windowHeight = window.innerHeight;
+            windowWidth = window.innerWidth;
+            scrollableHeight = Math.max(1, container.scrollHeight - windowHeight);
+            maxTranslateX = Math.max(0, horizontal.scrollWidth - windowWidth);
+            maxTranslateY = Math.round(windowHeight * 0.3);
+        };
 
-                // Apply horizontal transform with hardware acceleration
-                const maxTranslateX = horizontal.scrollWidth - window.innerWidth;
-                const translateX = progress * maxTranslateX;
-                
-                // Use transform3d for smooth GPU-accelerated diagonal scrolling
-                horizontal.style.transform = `translate3d(-${translateX}px, 0, 0)`;
-            } else if (containerRect.top > windowHeight) {
-                // Reset when above section
-                horizontal.style.transform = `translate3d(0, 0, 0)`;
+        const onResize = () => {
+            recompute();
+            tick();
+        };
+        window.addEventListener('resize', onResize);
+
+        let lastX = null;
+        let lastY = null;
+        const apply = (x, y) => {
+            if (x === lastX && y === lastY) return;
+            horizontal.style.transform = `translate3d(-${x}px, -${y}px, 0)`;
+            lastX = x;
+            lastY = y;
+        };
+
+        const tick = () => {
+            const rect = container.getBoundingClientRect();
+            const inView = rect.top <= 0 && rect.bottom >= windowHeight;
+
+            if (inView) {
+                const currentScroll = Math.max(0, -rect.top);
+                const progress = Math.max(0, Math.min(1, currentScroll / scrollableHeight));
+                const x = Math.round(progress * maxTranslateX);
+                const y = Math.round(progress * maxTranslateY);
+                apply(x, y);
+            } else if (rect.top > windowHeight) {
+                apply(0, 0);
+            } else if (rect.bottom < 0) {
+                apply(maxTranslateX, maxTranslateY);
             }
         };
 
-        // Listen to Lenis scroll events for ultra-smooth scrolling
-        lenis.on('scroll', handleScroll);
-        
-        // Initial call
-        handleScroll();
-        
+        // Wire up to Lenis if available, else use scroll + rAF fallback
+        let rafId = null;
+        const start = () => {
+            if (lenis && typeof lenis.on === 'function') {
+                lenis.on('scroll', tick);
+            } else {
+                const loop = () => {
+                    tick();
+                    rafId = requestAnimationFrame(loop);
+                };
+                rafId = requestAnimationFrame(loop);
+                window.addEventListener('scroll', tick, { passive: true });
+            }
+            // initial paint
+            tick();
+        };
+        const stop = () => {
+            if (lenis && typeof lenis.off === 'function') {
+                lenis.off('scroll', tick);
+            }
+            if (rafId) {
+                cancelAnimationFrame(rafId);
+                rafId = null;
+            }
+            window.removeEventListener('scroll', tick);
+            window.removeEventListener('resize', onResize);
+        };
+
+        // Defer start until next frame to ensure layout is settled on hard reloads
+        let startTimeout = null;
+        const startAfterReady = () => {
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    start();
+                });
+            });
+        };
+        const onLoad = () => {
+            recompute();
+            tick();
+        };
+        window.addEventListener('load', onLoad, { once: true });
+
+        startAfterReady();
+        startTimeout = setTimeout(() => {
+            recompute();
+            tick();
+        }, 50);
+
         return () => {
-            lenis.off('scroll', handleScroll);
+            stop();
+            if (startTimeout) clearTimeout(startTimeout);
+            window.removeEventListener('load', onLoad);
         };
     }, [lenis]);
-
     return (
         <section id="projects" 
             ref={containerRef}
