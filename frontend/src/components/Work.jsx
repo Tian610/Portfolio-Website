@@ -1,22 +1,43 @@
 import React, { useState, useEffect, useRef } from "react";
 import ProfileSnippet from "./ProfileSnippet";
+import tntnPhoto from "../assets/tntnPhoto.jpg"
+import lumenPhoto from "../assets/lumenPhoto.png"
+import blazersPhoto from "../assets/blazersimage.webp"
 
 const projects = [
     {
         company: "Lumentum",
         title: "Embedded Software DevSecOps Engineer",
-        description: "A revolutionary web application that transforms how users interact with digital content through innovative UI/UX design and cutting-edge technology.",
+        description: [
+            "Gained hands-on experience with large-scale CI/CD infrastructure, release engineering workflows, and <b>Linux development</b>",
+            "Developed a full-stack analytics dashboard integrating with internal build systems and <b>GitHub</b> workflows to visualize release history, test trends, and pipeline statistics beyond standard GitHub capabilities.",
+        ],
         tech: ["CI/CD", "GitHub", "React", "AWS/Azure"],
-        image: "/api/placeholder/400/300",
-        link: "#"
+        image: lumenPhoto,
+        link: "https://www.lumentum.com/en"
     },
     {
-        title: "TNTN Robotics",
-        title: "Team Member",
-        description: "AI-powered image recognition system that processes visual data in real-time, enabling seamless automation across multiple industries.",
-        tech: ["C++", "TensorFlow", "OpenCV", "Docker"],
-        image: "/api/placeholder/400/300",
-        link: "#"
+        company: "TNTN Robotics",
+        title: "Team Member and Designer",
+        description: [
+            "Earned the <b>World Excellence</b>, Tournament Champion, and Robot Skill Champion Awards, recognizing the top global team out of 109 University teams.",
+            "Developed real-time odometry systems and autonomous paths in <b>C++</b>, integrating IMUs and Optical Tracking Sensors."
+        ],
+        tech: ["C++", "CAD", "FPGA", "Control Systems"],
+        image: tntnPhoto,
+        link: "https://tntnvex.com/"
+    },
+    {
+        company: "TechBlazers",
+        title: "Robotics Coach",
+        description: [
+            "Coached six V5RC Robotics Teams for the 2024-2025 season of <b>VEX Robotics Competition.</b>",
+            "Taught hardware design, C++ programming for Robotics, game strategy, and effective documentation and communication strategies.",
+            "Coached teams to <b>championship</b> results at provincial and international events."
+        ],
+        tech: ["Coaching", "Project Management", "Strategy"],
+        image: blazersPhoto,
+        link: "https://techblazers.ca/"
     },
 ];
 
@@ -80,11 +101,11 @@ function Work() {
                     </div>
                     
                     {projects.map((project, index) => (
-                        <div key={index} className="work-panel">
+                        <div key={index} className="work-panel" >
                             <div className="work-content">
                                 <div className="work-image">
-                                    <div className="image-placeholder">
-                                        <span>{project.title.charAt(0)}</span>
+                                    <div className="image-area">
+                                        <img src={project.image} className="work-image-img" alt={project.title} />
                                     </div>
                                 </div>
                                 <div className="work-info">
@@ -93,14 +114,21 @@ function Work() {
                                         <hr className="line" />
                                         <h3 className="company-title">{project.company}</h3>
                                     </div>
-                                    <p className="work-description">{project.description}</p>
+                                    <ul className="work-description">
+                                        {project.description.map((item, itemIndex) => (
+                                            <li
+                                                key={itemIndex}
+                                                dangerouslySetInnerHTML={{ __html: item }}
+                                            />
+                                        ))}
+                                    </ul>
                                     <div className="work-tech">
                                         {project.tech.map((tech, techIndex) => (
                                             <span key={techIndex} className="tech-tag">{tech}</span>
                                         ))}
                                     </div>
-                                    <a href={project.link} className="work-link">
-                                        View Project →
+                                    <a href={project.link}  target="blank" className="work-link">
+                                        Learn more →
                                     </a>
                                 </div>
                             </div>

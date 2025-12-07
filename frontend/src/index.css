@@ -370,7 +370,7 @@ h2 {
     text-transform: uppercase;
     font-size: 2.5rem;
     transform: scaleX(1.2);
-    padding-left: 1rem;
+    padding-left: 2rem;
     letter-spacing: 0.05em;
 }
 
@@ -387,8 +387,7 @@ h2 {
     color: white;
     font-size: 1.2rem;
     line-height: 1.6;
-    display: flex;
-    align-items: center;
+    display: block; /* keep inline elements like <a> flowing within text */
 }
 
 .profile-section {
@@ -567,16 +566,20 @@ h2 {
 .work-horizontal-container {
     display: flex;
     height: 100vh;
-    transition: transform 0.1s ease-out;
+    will-change: transform;
+    gap: 6rem; /* larger space between panels */
 }
 
 .work-intro-panel, .work-panel {
-    width: 100vw;
+    width: 100vw; /* full viewport width */
+    flex: 0 0 100vw; /* prevent shrinking and ensure exact width in flex row */
+    box-sizing: border-box;
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+    padding: 8rem;
 }
 
 .work-intro-content {
@@ -585,6 +588,16 @@ h2 {
     max-width: 800px;
     padding: 2rem;
     gap: 3rem;
+}
+
+.work-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    max-width: 1500px;
+    width: 100%;
+    padding: 2rem;
+    align-items: center;
 }
 
 .work-intro-content .vertical-line {
@@ -625,44 +638,10 @@ h2 {
     animation: pulse 2s ease-in-out infinite;
 }
 
-.scroll-arrow {
-    font-size: 1.5rem;
-    animation: bounce-horizontal 1.5s ease-in-out infinite;
-}
-
-@keyframes bounce-horizontal {
-    0%, 100% {
-        transform: translateX(0);
-    }
-    50% {
-        transform: translateX(10px);
-    }
-}
-
-@keyframes pulse {
-    0%, 100% {
-        opacity: 0.7;
-    }
-    50% {
-        opacity: 1;
-    }
-}
-
-.work-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    max-width: 1200px;
-    width: 100%;
-    padding: 2rem;
-    align-items: center;
-}
-
 .work-image {
     position: relative;
     overflow: hidden;
     border-radius: 12px;
-    aspect-ratio: 4/3;
     background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
     display: flex;
     align-items: center;
@@ -681,6 +660,25 @@ h2 {
     font-size: 3rem;
     color: white;
     text-transform: uppercase;
+}
+
+.image-area {
+    margin: 1rem 1rem;
+    height: 100%;
+    width: 100%;
+}
+
+/* Work image scaling */
+.work-image-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 0.5rem;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.work-image:hover .work-image-img {
+    transform: scale(1.05);
 }
 
 .work-info {
@@ -727,9 +725,45 @@ h2 {
 .work-description {
     font-family: Montserrat;
     color: rgba(255, 255, 255, 0.8);
-    font-size: 1rem;
+    font-size: 0.8rem;
     line-height: 1.6;
-    margin: 0;
+    margin-left: 1rem;
+}
+
+b {
+    background: linear-gradient(90deg, #3b82f6, #3b82f6, #b206d4, #8b5cf6, #8b5cf6);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+    display: inline-block;
+    background-size: 300% 100%;
+    animation: text-glitter 10s linear infinite;
+}
+
+@keyframes text-glitter {
+    0% {
+        background-position: 25% 50%;
+    }
+    20% {
+        background-position: 50% 50%;
+    }
+    40% {
+        background-position: 75% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    60% {
+        background-position: 75% 50%;
+    }
+    80% {
+        background-position: 50% 50%;
+    }
+    100% {
+        background-position: 25% 50%;
+    }
 }
 
 .work-tech {
@@ -813,8 +847,9 @@ h2 {
 .project-horizontal-container {
     display: flex;
     height: 100vh;
-    transition: transform 0.1s ease-out;
+    will-change: transform;
     transform: translate3d(0,0,0);
+    z-index: 0; /* ensure content sits behind the sticky title */
 }
 
 .project-panel {
@@ -824,7 +859,9 @@ h2 {
     align-items: center;
     justify-content: center;
     position: relative;
+    z-index: 0; /* neutral layer */
 }
+
 
 .project-content {
     gap: 4rem;
@@ -832,4 +869,28 @@ h2 {
     width: 50%;
     padding: 2rem;
     align-items: center;
+}
+
+/* Pin the project title to the bottom of the panel */
+.project-title {
+    top: 70vh;
+    left: 2rem;
+    display: flex;
+    margin-bottom: 0rem;
+    z-index: 5; /* sits above scrolling content */
+    pointer-events: none; /* avoid blocking scroll/interactions */
+}
+
+.project-title h2 {
+    text-shadow: 2px 2px 3px #0a0a0a;
+
+}
+
+.project-subtitle {
+    font-family: Montserrat;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.5rem;
+    line-height: 1.6;
+    margin-left: 0;
+    text-shadow: 2px 2px 3px #0a0a0a;
 }

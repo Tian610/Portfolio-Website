@@ -1,34 +1,35 @@
 import React, { useState, useEffect, useRef } from "react";
 import ProfileSnippet from "./ProfileSnippet";
 import { useLenis } from "../hooks/useLenis";
+import tntnPhoto from "../assets/tntnPhoto.jpg"
 
 const projects = [
     {
         title: "aroject Alpha",
         description: "A revolutionary web application that transforms how users interact with digital content through innovative UI/UX design and cutting-edge technology.",
         tech: ["React", "Node.js", "MongoDB", "WebGL"],
-        image: "/api/placeholder/400/300",
+        image: tntnPhoto,
         link: "#"
     },
     {
         title: "beural Vision",
         description: "AI-powered image recognition system that processes visual data in real-time, enabling seamless automation across multiple industries.",
         tech: ["Python", "TensorFlow", "OpenCV", "Docker"],
-        image: "/api/placeholder/400/300",
+        image: tntnPhoto,
         link: "#"
     },
     {
         title: "ceural Vision",
         description: "AI-powered image recognition system that processes visual data in real-time, enabling seamless automation across multiple industries.",
         tech: ["Python", "TensorFlow", "OpenCV", "Docker"],
-        image: "/api/placeholder/400/300",
+        image: tntnPhoto,
         link: "#"
     },
     {
         title: "deural Vision",
         description: "AI-powered image recognition system that processes visual data in real-time, enabling seamless automation across multiple industries.",
         tech: ["Python", "TensorFlow", "OpenCV", "Docker"],
-        image: "/api/placeholder/400/300",
+        image: tntnPhoto,
         link: "#"
     },
 ];
@@ -43,10 +44,15 @@ function Projects() {
         const horizontal = horizontalRef.current;
         if (!container || !horizontal) return;
 
+        // Hint the browser we will animate transforms
+        horizontal.style.willChange = 'transform';
+
         // Precompute ranges and keep them fresh on resize
         let windowHeight = window.innerHeight;
         let windowWidth = window.innerWidth;
-        let scrollableHeight = Math.max(1, container.scrollHeight - windowHeight);
+        let containerTop = container.offsetTop;
+        let containerHeight = container.offsetHeight;
+        let scrollableHeight = Math.max(1, containerHeight - windowHeight);
 
         // Make horizontal movement faster than vertical for a steeper diagonal
         const horizontalSpeedFactor = 1.1; // increase for faster horizontal translation
@@ -56,16 +62,12 @@ function Projects() {
         const recompute = () => {
             windowHeight = window.innerHeight;
             windowWidth = window.innerWidth;
-            scrollableHeight = Math.max(1, container.scrollHeight - windowHeight);
+            containerTop = container.offsetTop;
+            containerHeight = container.offsetHeight;
+            scrollableHeight = Math.max(1, containerHeight - windowHeight);
             maxTranslateX = Math.max(0, (horizontal.scrollWidth - windowWidth) * horizontalSpeedFactor);
             maxTranslateY = Math.round(windowHeight * 0.3);
         };
-
-        const onResize = () => {
-            recompute();
-            tick();
-        };
-        window.addEventListener('resize', onResize);
 
         let lastX = null;
         let lastY = null;
@@ -77,75 +79,58 @@ function Projects() {
         };
 
         const tick = () => {
-            const rect = container.getBoundingClientRect();
-            const inView = rect.top <= 0 && rect.bottom >= windowHeight;
+            const scrollY = window.scrollY;
+            const start = containerTop;
+            const end = containerTop + containerHeight;
+            const inView = scrollY >= start && scrollY <= end - windowHeight;
 
             if (inView) {
-                const currentScroll = Math.max(0, -rect.top);
+                const currentScroll = Math.max(0, scrollY - start);
                 const progress = Math.max(0, Math.min(1, currentScroll / scrollableHeight));
                 const x = Math.round(progress * maxTranslateX);
                 const y = Math.round(progress * maxTranslateY);
                 apply(x, y);
-            } else if (rect.top > windowHeight) {
+            } else if (scrollY < start) {
                 apply(0, 0);
-            } else if (rect.bottom < 0) {
+            } else if (scrollY > end) {
                 apply(maxTranslateX, maxTranslateY);
             }
         };
 
-        // Wire up to Lenis if available, else use scroll + rAF fallback
-        let rafId = null;
-        const start = () => {
-            if (lenis && typeof lenis.on === 'function') {
-                lenis.on('scroll', tick);
-            } else {
-                const loop = () => {
-                    tick();
-                    rafId = requestAnimationFrame(loop);
-                };
-                rafId = requestAnimationFrame(loop);
-                window.addEventListener('scroll', tick, { passive: true });
-            }
-            // initial paint
-            tick();
-        };
-        const stop = () => {
-            if (lenis && typeof lenis.off === 'function') {
-                lenis.off('scroll', tick);
-            }
-            if (rafId) {
-                cancelAnimationFrame(rafId);
-                rafId = null;
-            }
-            window.removeEventListener('scroll', tick);
-            window.removeEventListener('resize', onResize);
-        };
-
-        // Defer start until next frame to ensure layout is settled on hard reloads
-        let startTimeout = null;
-        const startAfterReady = () => {
+        // rAF-scheduled updates to avoid multiple ticks per frame
+        let isTicking = false;
+        const requestTick = () => {
+            if (isTicking) return;
+            isTicking = true;
             requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    start();
-                });
+                tick();
+                isTicking = false;
             });
         };
-        const onLoad = () => {
-            recompute();
-            tick();
-        };
-        window.addEventListener('load', onLoad, { once: true });
 
-        startAfterReady();
-        startTimeout = setTimeout(() => {
+        // Event wiring: prefer Lenis, else scroll/resize with passive
+        const onResize = () => {
             recompute();
-            tick();
-        }, 50);
+            requestTick();
+        };
+        window.addEventListener('resize', onResize, { passive: true });
+
+        if (lenis && typeof lenis.on === 'function') {
+            lenis.on('scroll', requestTick);
+        } else {
+            window.addEventListener('scroll', requestTick, { passive: true });
+        }
+
+        // initial paint
+        recompute();
+        requestTick();
 
         return () => {
-            stop();
-            if (startTimeout) clearTimeout(startTimeout);
-            window.removeEventListener('load', onLoad);
+            window.removeEventListener('resize', onResize);
+            window.removeEventListener('scroll', requestTick);
+            if (lenis && typeof lenis.off === 'function') {
+                lenis.off('scroll', requestTick);
+            }
         };
     }, [lenis]);
     return (
@@ -153,6 +138,14 @@ function Projects() {
             ref={containerRef}
             style={{ height: `${projects.length * 100}vh` }}
         >
+
+            <div className="title-container project-title">
+                <div className="vertical-line"></div>
+                <div>
+                    <h2>Projects</h2>
+                    <p className="project-subtitle">A collection of personal and academic works</p>
+                </div>
+            </div>
             <div className="project-sticky-container">
                 <div 
                     ref={horizontalRef}
@@ -172,9 +165,7 @@ function Projects() {
                         >
                             <div className="project-content">
                                 <div className="work-image">
-                                    <div className="image-placeholder">
-                                        <span>{project.title.charAt(0)}</span>
-                                    </div>
+                                    <img src={project.image}></img>
                                 </div>
                             </div>
                         </div>
