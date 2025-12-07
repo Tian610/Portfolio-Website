@@ -686,7 +686,7 @@ h2 {
 .work-info {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
 .work-title-2 {
@@ -698,10 +698,36 @@ h2 {
     letter-spacing: 0.05em;
 }
 
+.work-title-3 {
+    font-family: Panchang-Bold;
+    color: white;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    margin: 0;
+    letter-spacing: 0.05em;
+}
+
+.company-title {
+    font-family: Akeila;
+    margin: 0;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bolder;
+    font-size: 1.5rem;
+    font-weight: bolder;
+    letter-spacing: 0.1rem;
+}
+
+.line {
+    color: white;
+    margin: 0.5rem 0;
+    margin-right: 10rem;
+}
+
 .work-description {
     font-family: Montserrat;
     color: rgba(255, 255, 255, 0.8);
-    font-size: 1.2rem;
+    font-size: 1rem;
     line-height: 1.6;
     margin: 0;
 }

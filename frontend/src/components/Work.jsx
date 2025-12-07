@@ -3,16 +3,18 @@ import ProfileSnippet from "./ProfileSnippet";
 
 const projects = [
     {
-        title: "Project Alpha",
+        company: "Lumentum",
+        title: "Embedded Software DevSecOps Engineer",
         description: "A revolutionary web application that transforms how users interact with digital content through innovative UI/UX design and cutting-edge technology.",
-        tech: ["React", "Node.js", "MongoDB", "WebGL"],
+        tech: ["CI/CD", "GitHub", "React", "AWS/Azure"],
         image: "/api/placeholder/400/300",
         link: "#"
     },
     {
-        title: "Neural Vision",
+        title: "TNTN Robotics",
+        title: "Team Member",
         description: "AI-powered image recognition system that processes visual data in real-time, enabling seamless automation across multiple industries.",
-        tech: ["Python", "TensorFlow", "OpenCV", "Docker"],
+        tech: ["C++", "TensorFlow", "OpenCV", "Docker"],
         image: "/api/placeholder/400/300",
         link: "#"
     },
@@ -86,7 +88,11 @@ function Work() {
                                     </div>
                                 </div>
                                 <div className="work-info">
-                                    <h3 className="work-title-2">{project.title}</h3>
+                                    <div>
+                                        <h3 className="work-title-3">{project.title}</h3>
+                                        <hr className="line" />
+                                        <h3 className="company-title">{project.company}</h3>
+                                    </div>
                                     <p className="work-description">{project.description}</p>
                                     <div className="work-tech">
                                         {project.tech.map((tech, techIndex) => (

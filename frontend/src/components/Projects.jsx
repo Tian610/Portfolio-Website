@@ -47,14 +47,17 @@ function Projects() {
         let windowHeight = window.innerHeight;
         let windowWidth = window.innerWidth;
         let scrollableHeight = Math.max(1, container.scrollHeight - windowHeight);
-        let maxTranslateX = Math.max(0, horizontal.scrollWidth - windowWidth);
+
+        // Make horizontal movement faster than vertical for a steeper diagonal
+        const horizontalSpeedFactor = 1.1; // increase for faster horizontal translation
+        let maxTranslateX = Math.max(0, (horizontal.scrollWidth - windowWidth) * horizontalSpeedFactor);
         let maxTranslateY = Math.round(windowHeight * 0.3);
 
         const recompute = () => {
             windowHeight = window.innerHeight;
             windowWidth = window.innerWidth;
             scrollableHeight = Math.max(1, container.scrollHeight - windowHeight);
-            maxTranslateX = Math.max(0, horizontal.scrollWidth - windowWidth);
+            maxTranslateX = Math.max(0, (horizontal.scrollWidth - windowWidth) * horizontalSpeedFactor);
             maxTranslateY = Math.round(windowHeight * 0.3);
         };
 
