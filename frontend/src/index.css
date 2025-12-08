@@ -160,49 +160,50 @@ html, body {
     transform: scale(1.1);
 }
 
-.nav-footer-left {
+.nav-footer {
     position: fixed;
+    width: 100%;
     bottom: 0;
     left: 0;
-    width: 100%;
-    box-sizing: border-box;
     z-index: 100;
-    padding: 1rem 2rem;
-    transform: translateY(100%);
-    transition: transform 0.7s ease-in-out;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
+    box-sizing: border-box;
+    transform: translateY(200%);
+    transition: transform 0.5s ease-in-out;
 }
 
-.nav-footer-left.visible {
+.nav-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    backdrop-filter: blur(10px);
+    mask: linear-gradient(transparent, gray, black);
+    -webkit-mask: linear-gradient(transparent, gray, black);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.nav-footer.visible {
     transform: translateY(0);
+}
+
+.nav-footer-left, 
+.nav-footer-right {
+    position: relative;
+    pointer-events: auto;
+    padding: 1rem 2rem;
+    z-index: 101;
 }
 
 .nav-footer-right {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    z-index: 100;
-    transform: translateY(100%);
-    transition: transform 0.7s ease-in-out;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     gap: 3rem;
-    padding: 1rem 2rem;
-}
-
-.nav-footer-right.visible {
-    transform: translateY(0);
-}
-
-.nav-footer {
-    position: fixed;
-    display: flex;
-    justify-content: space-between;
-    bottom: 0;
-    align-items: center;
 }
 
 .footer-item {
@@ -219,8 +220,8 @@ html, body {
 }
 
 .nav-icon {
-    width: 3rem;
-    height: 3rem;
+    width: 2rem;
+    height: 2rem;
     filter: invert();
 }
 
@@ -674,28 +675,26 @@ h2 {
 }
 
 .project-content .work-image {
+    position: relative;
     width: 100%;
     max-width: 800px;
-    height: auto;
     aspect-ratio: 16 / 10;
-}
+    
+    /* Create the border thickness */
+    padding: 2px; 
+    
+    /* Define the shape (Bottom-Right and Bottom-Left cuts) */
+    --cut-size: 40px;
+    clip-path: polygon(
+        0 0,                                    /* Top Left */
+        100% 0,                                 /* Top Right */
+        100% calc(100% - var(--cut-size)),      /* Start BR cut */
+        calc(100% - var(--cut-size)) 100%,      /* End BR cut */
+        var(--cut-size) 100%,                   /* Start BL cut */
+        0 calc(100% - var(--cut-size))          /* End BL cut */
+    );
 
-.project-content .work-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* Glowing animated border with tech vibes */
-.project-content .work-image::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 12px;
-    padding: 2px;
+    /* 2. The Gradient Background (The Border Color) */
     background: linear-gradient(
         45deg,
         #3b82f6,
@@ -704,30 +703,43 @@ h2 {
         #3b82f6
     );
     background-size: 300% 300%;
-    background-position: 0% 0%;
     animation: shimmerBorder 4s linear infinite;
-    -webkit-mask: 
-        linear-gradient(#fff 0 0) content-box, 
-        linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask: 
-        linear-gradient(#fff 0 0) content-box, 
-        linear-gradient(#fff 0 0);
-    mask-composite: exclude;
-    pointer-events: none;
-    z-index: 2;
+    
+    /* Hardware acceleration for smoother scrolling */
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+/* 3. The Image sits inside */
+.project-content .work-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    
+    /* 
+       IMPORTANT: Inherit the clip-path. 
+       Because the image is inside the padding, the clip-path 
+       scales down perfectly, keeping the border visible and 
+       aligned along the diagonal cuts.
+    */
+    clip-path: inherit;
+    
+    /* Optional: Slight radius on the inner image if you want softer corners */
+    /* border-radius: 10px; */ 
+    background-color: #000; /* Fallback background behind image */
+}
+
+/* Remove the old ::before pseudo-element entirely */
+.project-content .work-image::before {
+    content: none;
 }
 
 @keyframes shimmerBorder {
-    0% {
-        background-position: 0% 0%;
-    }
-    50% {
-        background-position: 100% 100%;
-    }
-    100% {
-        background-position: 0% 0%;
-    }
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
 }
 
 /* Project section images with triangular corner cutoff */
@@ -1022,4 +1034,282 @@ b {
     font-size: 1.2rem;
     margin: 0;
     letter-spacing: 0.05em;
+}
+
+.project-title-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.project-links {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.github-icon {
+    height: 2rem;
+    border-radius: 10px;
+    cursor: pointer;
+    filter: invert();
+    transition: transform 0.3s ease;
+}
+
+.github-icon:hover {
+    transform: scale(1.1);
+}
+
+/* Demo Button Styling */
+.demo-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.4rem 1rem;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 50px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.demo-button:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.demo-button-text {
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: Panchang-Bold;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+/* Contact Section */
+
+#contact {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 20vw;
+}
+
+.contact-snippet {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    width: 100%;
+    max-width: 1200px;
+    align-items: start;
+}
+
+.contact-form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 600px;
+}
+
+.contact-form-section form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.form-element {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.label-title {
+    font-family: Panchang-Bold;
+    color: white;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+}
+
+.form-element input,
+.form-element textarea {
+    font-family: Montserrat;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.form-element input:focus,
+.form-element textarea:focus {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(139, 92, 246, 0.5);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.form-element input::placeholder,
+.form-element textarea::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.form-element textarea {
+    min-height: 150px;
+    resize: vertical;
+    font-family: Montserrat;
+}
+
+.form-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.btn-submit {
+    font-family: Panchang-Bold;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 1rem 3rem;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
+    background: linear-gradient(135deg, #4a8ff7, #9c6df7);
+}
+
+.btn-submit:active {
+    transform: translateY(0);
+}
+
+.status-message {
+    font-family: Montserrat;
+    color: rgba(255, 255, 255, 0.9);
+    padding: 0.75rem 1.5rem;
+    background: rgba(139, 92, 246, 0.2);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 50px;
+    font-size: 0.9rem;
+}
+
+.animate-status {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.contact-info-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+}
+
+.contact-or-text {
+    font-family: Montserrat;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.contact-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.contact-info-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.contact-info-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(139, 92, 246, 0.3);
+    transform: translateX(5px);
+}
+
+.contact-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    filter: invert();
+    flex-shrink: 0;
+}
+
+.contact-info-item a {
+    font-family: Montserrat;
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.contact-info-item a:hover {
+    color: #8b5cf6;
+}
+
+.copyright-section {
+    width: 100%;
+    padding: 2rem 0;
+    text-align: center;
+}
+
+.copyright-text {
+    font-family: Montserrat;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    font-size: 0.9rem;
+    margin: 0;
+    letter-spacing: 0.05em;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #contact {
+        padding: 2rem 1rem;
+    }
+    
+    .contact-snippet {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    
+    .contact-form-section {
+        max-width: 100%;
+    }
 }

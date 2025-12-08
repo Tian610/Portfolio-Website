@@ -16,12 +16,21 @@ function Gallery() {
                 const blobServiceClient = new BlobServiceClient(`https://${storageAccountName}.blob.core.windows.net/`);
                 const containerClient = blobServiceClient.getContainerClient(containerName);
 
-                const urls = [];
+                const blobsWithMetadata = [];
                 for await (const blob of containerClient.listBlobsFlat()) {
                     const url = `https://${storageAccountName}.blob.core.windows.net/${containerName}/${blob.name}`;
-                    urls.push(url);
+                    blobsWithMetadata.push({
+                        url: url,
+                        lastModified: blob.properties.lastModified
+                    });
                 }
-                setImages(urls);
+                
+                // Sort by most recent first (descending order)
+                blobsWithMetadata.sort((a, b) => b.lastModified - a.lastModified);
+                
+                // Extract just the URLs after sorting
+                const sortedUrls = blobsWithMetadata.map(blob => blob.url);
+                setImages(sortedUrls);
             } catch (err) {
                 console.log("Error listing blobs", err.message);
             }

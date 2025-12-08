@@ -46,6 +46,12 @@ function Navbar() {
                     <button onClick={() => scrollToSection('work')} className="nav-link">
                         Work
                     </button>
+                    <button onClick={() => scrollToSection('projects')} className="nav-link">
+                        Projects
+                    </button>
+                    <button onClick={() => scrollToSection('contact')} className="nav-link">
+                        Contact
+                    </button>
                     <button onClick={goToGallery} className="nav-link">
                         Gallery
                     </button>
@@ -53,11 +59,11 @@ function Navbar() {
             </nav>
 
             <div className={`nav-footer ${isScrolled ? 'visible' : ''}`}>
-                <div className={`nav-footer-left ${isScrolled ? 'visible' : ''}`}>
+                <div className="nav-footer-left">
                     <div className="title-footer">PORTFOLIO 2025</div>
                 </div>
 
-                <div className={`nav-footer-right ${isScrolled ? 'visible' : ''}`}>
+                <div className="nav-footer-right">
                     <a href="https://www.github.com/tian610" className="footer-item">
                         <img src={github} className="nav-icon"></img>
                         <div className="Akeila-text">GitHub</div>

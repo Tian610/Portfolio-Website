@@ -6,6 +6,8 @@ import blazersPhoto from "../assets/blazersimage.webp"
 import lumentum from "../assets/lumentum.png"
 import tntn from "../assets/tntn.jpg"
 import techblazers from "../assets/techblazers.png"
+import yorkIcon from "../assets/york.png"
+import yorkPhoto from "../assets/york.webp"
 
 const projects = [
     {
@@ -43,6 +45,19 @@ const projects = [
         tech: ["Coaching", "Project Management", "Strategy"],
         icon: techblazers,
         image: blazersPhoto,
+        link: "https://techblazers.ca/"
+    },
+    {
+        company: "York University",
+        title: "Research Intern",
+        description: [
+            "Conducted research on <b>reinforcement learning</b> for human-like autonomous driving in multi-agent environments.",
+            "Benchmarked models for safety, efficiency, and behavioral realism using <b>Python</b> simulations and synthetic traffic datasets",
+            "Implemented <b>DRQfD</b> (Deep Recurrent Q-learning from Demonstration), reducing simulated collision rates by 15% in complex traffic tests",
+        ],
+        tech: ["ML/RL", "Research", "ROS", "Gazebo"],
+        icon: yorkIcon,
+        image: yorkPhoto,
         link: "https://techblazers.ca/"
     },
 ];

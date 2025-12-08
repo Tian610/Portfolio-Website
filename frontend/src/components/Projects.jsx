@@ -2,7 +2,8 @@ import React, { useRef, useEffect } from "react";
 import { useLenis } from "../hooks/useLenis";
 import gradmap from "../assets/gradmap.png";
 import de1soc from "../assets/de1soc.jpg";
-import tntnPhoto from "../assets/tntnPhoto.jpg";
+import github from "../assets/github.png";
+import portfolio from "../assets/image.png";
 
 const projects = [
   {
@@ -10,28 +11,24 @@ const projects = [
     description: "A full-stack application facilitating a data-rich, easy way to browse UBC Courses.",
     tech: ["React", "Node.js", "Java", "Spring"],
     image: gradmap,
-    link: "#",
+    link: "https://github.com/Meriadoc-Gradmap/UBCGradMap",
+    demo: "https://ubcgradmap.com",
   },
   {
-    title: "Custom CPU",
-    description: "A (not really) powerful RISC inspired CPU developed in SystemVerilog",
-    tech: ["Python", "TensorFlow", "OpenCV", "Docker"],
+    title: "Custom FPGA CPU",
+    description: "A (not really) powerful RISC inspired CPU developed in Verilog.",
+    tech: ["FPGA", "Verilog", "Quartus", "Docker"],
     image: de1soc,
-    link: "#",
-  },
+    link: "https://github.com/Tian610/CPEN-Year-2/tree/main/CPEN%20211/Labs/Lab%207",
+    demo: "#",
+  },  
   {
-    title: "ceural Vision",
-    description: "AI-powered image recognition system that processes visual data in real-time.",
-    tech: ["Python", "TensorFlow", "OpenCV", "Docker"],
-    image: tntnPhoto,
-    link: "#",
-  },
-  {
-    title: "deural Vision",
-    description: "AI-powered image recognition system that processes visual data in real-time.",
-    tech: ["Python", "TensorFlow", "OpenCV", "Docker"],
-    image: tntnPhoto,
-    link: "#",
+    title: "This Website?",
+    description: "A little cheap, perhaps, but this site was one of my favorite projects!",
+    tech: ["Azure", "JavaScript", "Vite", "React"],
+    image: portfolio,
+    link: "https://github.com/Tian610/Portfolio-Website",
+    demo: "https://www.tian610.ca",
   },
 ];
 
@@ -175,9 +172,21 @@ function Projects() {
                   <img src={project.image} alt={project.title} />
                 </div>
                 <div className="project-info">
-                  <h3 className="project-title-1">{project.title}</h3>
-                  <p className="project-description">{project.description}</p>
-                  <div className="work-tech">
+                        <div className="project-title-container">
+                            <h3 className="project-title-1">{project.title}</h3>
+                            <div className="project-links">
+                              {project.demo && project.demo !== "#" && (
+                                <a href={project.demo} target="_blank" rel="noopener noreferrer" className="demo-button">
+                                  <span className="demo-button-text">Demo</span>
+                                </a>
+                              )}
+                              <a href={project.link} target="blank">
+                                  <img src={github} className="github-icon"></img>
+                              </a>
+                            </div>
+                        </div>
+                        <p className="project-description">{project.description}</p>
+                    <div className="work-tech">
                     {project.tech.map((tech, techIndex) => (
                       <span key={techIndex} className="tech-tag">
                         {tech}
