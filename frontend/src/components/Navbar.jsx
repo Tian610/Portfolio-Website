@@ -52,19 +52,21 @@ function Navbar() {
                 </div>
             </nav>
 
-            <div className={`nav-footer-left ${isScrolled ? 'visible' : ''}`}>
-                <div className="title-footer">PORTFOLIO 2025</div>
-            </div>
+            <div className={`nav-footer ${isScrolled ? 'visible' : ''}`}>
+                <div className={`nav-footer-left ${isScrolled ? 'visible' : ''}`}>
+                    <div className="title-footer">PORTFOLIO 2025</div>
+                </div>
 
-            <div className={`nav-footer-right ${isScrolled ? 'visible' : ''}`}>
-                <a href="https://www.github.com/tian610" className="footer-item">
-                    <img src={github} className="nav-icon"></img>
-                    <div className="Akeila-text">GitHub</div>
-                </a>
-                <a href="https://www.linkedin.com/in/tianxingchen" className="footer-item">
-                    <img src={linkedin} className="nav-icon"></img>
-                    <div className="Akeila-text">LinkedIn</div>
-                </a>
+                <div className={`nav-footer-right ${isScrolled ? 'visible' : ''}`}>
+                    <a href="https://www.github.com/tian610" className="footer-item">
+                        <img src={github} className="nav-icon"></img>
+                        <div className="Akeila-text">GitHub</div>
+                    </a>
+                    <a href="https://www.linkedin.com/in/tianxingchen" className="footer-item">
+                        <img src={linkedin} className="nav-icon"></img>
+                        <div className="Akeila-text">LinkedIn</div>
+                    </a>
+                </div>
             </div>
         </>
     );

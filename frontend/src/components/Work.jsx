@@ -3,6 +3,9 @@ import ProfileSnippet from "./ProfileSnippet";
 import tntnPhoto from "../assets/tntnPhoto.jpg"
 import lumenPhoto from "../assets/lumenPhoto.png"
 import blazersPhoto from "../assets/blazersimage.webp"
+import lumentum from "../assets/lumentum.png"
+import tntn from "../assets/tntn.jpg"
+import techblazers from "../assets/techblazers.png"
 
 const projects = [
     {
@@ -14,6 +17,7 @@ const projects = [
         ],
         tech: ["CI/CD", "GitHub", "React", "AWS/Azure"],
         image: lumenPhoto,
+        icon: lumentum,
         link: "https://www.lumentum.com/en"
     },
     {
@@ -25,6 +29,7 @@ const projects = [
         ],
         tech: ["C++", "CAD", "FPGA", "Control Systems"],
         image: tntnPhoto,
+        icon: tntn,
         link: "https://tntnvex.com/"
     },
     {
@@ -36,6 +41,7 @@ const projects = [
             "Coached teams to <b>championship</b> results at provincial and international events."
         ],
         tech: ["Coaching", "Project Management", "Strategy"],
+        icon: techblazers,
         image: blazersPhoto,
         link: "https://techblazers.ca/"
     },
@@ -89,7 +95,7 @@ function Work() {
                             <div>
                                 <h2 className="work-title">Selected Work</h2>
                                 <p className="work-subtitle">
-                                    A showcase of projects that demonstrate innovation, creativity, and technical excellence.
+                                    A collection of my professional experiences
                                 </p>
                                 <div className="scroll-indicator">
                                     <span>Scroll to explore</span>
@@ -112,7 +118,10 @@ function Work() {
                                     <div>
                                         <h3 className="work-title-3">{project.title}</h3>
                                         <hr className="line" />
-                                        <h3 className="company-title">{project.company}</h3>
+                                        <div style={{ display: "flex" }}>
+                                            <img src={project.icon} className="work-icon"></img>
+                                            <h3 className="company-title">{project.company}</h3>
+                                        </div>
                                     </div>
                                     <ul className="work-description">
                                         {project.description.map((item, itemIndex) => (

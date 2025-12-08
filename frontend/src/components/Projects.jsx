@@ -57,7 +57,7 @@ function Projects() {
         // Make horizontal movement faster than vertical for a steeper diagonal
         const horizontalSpeedFactor = 1.1; // increase for faster horizontal translation
         let maxTranslateX = Math.max(0, (horizontal.scrollWidth - windowWidth) * horizontalSpeedFactor);
-        let maxTranslateY = Math.round(windowHeight * 0.3);
+        let maxTranslateY = Math.round(windowHeight * 0.7);
 
         const recompute = () => {
             windowHeight = window.innerHeight;
@@ -66,7 +66,7 @@ function Projects() {
             containerHeight = container.offsetHeight;
             scrollableHeight = Math.max(1, containerHeight - windowHeight);
             maxTranslateX = Math.max(0, (horizontal.scrollWidth - windowWidth) * horizontalSpeedFactor);
-            maxTranslateY = Math.round(windowHeight * 0.3);
+            maxTranslateY = Math.round(windowHeight * 0.7);
         };
 
         let lastX = null;
@@ -138,12 +138,11 @@ function Projects() {
             ref={containerRef}
             style={{ height: `${projects.length * 100}vh` }}
         >
-
             <div className="title-container project-title">
                 <div className="vertical-line"></div>
                 <div>
                     <h2>Projects</h2>
-                    <p className="project-subtitle">A collection of personal and academic works</p>
+                    <p className="project-subtitle">A showcase of my personal and academic projects</p>
                 </div>
             </div>
             <div className="project-sticky-container">

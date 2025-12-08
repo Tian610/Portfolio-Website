@@ -163,11 +163,12 @@ html, body {
 .nav-footer-left {
     position: fixed;
     bottom: 0;
+    left: 0;
     width: 100%;
     box-sizing: border-box;
     z-index: 100;
     padding: 1rem 2rem;
-    transform: translatex(-30%);
+    transform: translateY(100%);
     transition: transform 0.7s ease-in-out;
     display: flex;
     justify-content: space-between;
@@ -183,7 +184,7 @@ html, body {
     bottom: 0;
     right: 0;
     z-index: 100;
-    transform: translatex(100%);
+    transform: translateY(100%);
     transition: transform 0.7s ease-in-out;
     display: flex;
     justify-content: space-between;
@@ -196,6 +197,14 @@ html, body {
     transform: translateY(0);
 }
 
+.nav-footer {
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    bottom: 0;
+    align-items: center;
+}
+
 .footer-item {
     text-decoration: none;
     display: flex;
@@ -204,13 +213,15 @@ html, body {
     align-items: center;
 }
 
+.footer-item:hover {
+    transform: scale(1.05);
+    transition: 0.5s ease;
+}
+
 .nav-icon {
     width: 3rem;
     height: 3rem;
     filter: invert();
-}
-.nav-footer-right.visible {
-    transform: translateY(0);
 }
 
 /* Main title transitions */
@@ -408,17 +419,17 @@ h2 {
 }
 
 .imageGalleryContainer {
-  column-width: 16rem;      /* or use column-width for responsiveness */
-  column-gap: 16px;         /* space between columns */
-  padding: 16px;            /* optional: padding around gallery */
-  padding-top: 4rem;
+    column-width: 16rem;      /* or use column-width for responsiveness */
+    column-gap: 16px;         /* space between columns */
+    padding: 16px;            /* optional: padding around gallery */
+    padding-top: 4rem;
 }
 
 .galleryImage {
-  break-inside: avoid;      /* keep each item in one column */
-  margin-bottom: 16px;      /* space between stacked items */
-  transform-style: preserve-3d;     /* enable 3D transformations */
-  cursor: pointer;          /* show it's interactive */
+    break-inside: avoid;      /* keep each item in one column */
+    margin-bottom: 16px;      /* space between stacked items */
+    transform-style: preserve-3d;     /* enable 3D transformations */
+    cursor: pointer;          /* show it's interactive */
 }
 
 .galleryImage img {
@@ -479,8 +490,15 @@ h2 {
 }
 
 .imageNavigator {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: max-content;
     display: flex;
     flex-direction: row;
+    z-index: 999;
+    padding-bottom: 1rem;
 }
 
 .thumbnail {
@@ -627,6 +645,12 @@ h2 {
     margin-bottom: 3rem;
 }
 
+.work-icon {
+    height: 2rem;
+    margin-right: 1rem;
+    border-radius: 10px;
+}
+
 .scroll-indicator {
     display: flex;
     align-items: center;
@@ -646,6 +670,11 @@ h2 {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/* Project section images with triangular corner cutoff */
+.project-panel .work-image {
+    clip-path: polygon(0 0, 100% 0, 75% 0, 100% 25%, 100% 100%, 25% 100%, 0 75%);
 }
 
 .image-placeholder {
@@ -781,6 +810,12 @@ b {
     font-size: 0.9rem;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
+    cursor: default;
+}
+
+.tech-tag:hover {
+    transform: scale(1.1);
+    transition: 0.3s;
 }
 
 .work-link {
@@ -881,16 +916,10 @@ b {
     pointer-events: none; /* avoid blocking scroll/interactions */
 }
 
-.project-title h2 {
-    text-shadow: 2px 2px 3px #0a0a0a;
-
-}
-
 .project-subtitle {
     font-family: Montserrat;
     color: rgba(255, 255, 255, 0.8);
     font-size: 1.5rem;
     line-height: 1.6;
     margin-left: 0;
-    text-shadow: 2px 2px 3px #0a0a0a;
 }
