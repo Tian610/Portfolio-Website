@@ -1,178 +1,197 @@
-import React, { useState, useEffect, useRef } from "react";
-import ProfileSnippet from "./ProfileSnippet";
+import React, { useRef, useEffect } from "react";
 import { useLenis } from "../hooks/useLenis";
-import tntnPhoto from "../assets/tntnPhoto.jpg"
+import gradmap from "../assets/gradmap.png";
+import de1soc from "../assets/de1soc.jpg";
+import tntnPhoto from "../assets/tntnPhoto.jpg";
 
 const projects = [
-    {
-        title: "aroject Alpha",
-        description: "A revolutionary web application that transforms how users interact with digital content through innovative UI/UX design and cutting-edge technology.",
-        tech: ["React", "Node.js", "MongoDB", "WebGL"],
-        image: tntnPhoto,
-        link: "#"
-    },
-    {
-        title: "beural Vision",
-        description: "AI-powered image recognition system that processes visual data in real-time, enabling seamless automation across multiple industries.",
-        tech: ["Python", "TensorFlow", "OpenCV", "Docker"],
-        image: tntnPhoto,
-        link: "#"
-    },
-    {
-        title: "ceural Vision",
-        description: "AI-powered image recognition system that processes visual data in real-time, enabling seamless automation across multiple industries.",
-        tech: ["Python", "TensorFlow", "OpenCV", "Docker"],
-        image: tntnPhoto,
-        link: "#"
-    },
-    {
-        title: "deural Vision",
-        description: "AI-powered image recognition system that processes visual data in real-time, enabling seamless automation across multiple industries.",
-        tech: ["Python", "TensorFlow", "OpenCV", "Docker"],
-        image: tntnPhoto,
-        link: "#"
-    },
+  {
+    title: "UBC GradMap",
+    description: "A full-stack application facilitating a data-rich, easy way to browse UBC Courses.",
+    tech: ["React", "Node.js", "Java", "Spring"],
+    image: gradmap,
+    link: "#",
+  },
+  {
+    title: "Custom CPU",
+    description: "A (not really) powerful RISC inspired CPU developed in SystemVerilog",
+    tech: ["Python", "TensorFlow", "OpenCV", "Docker"],
+    image: de1soc,
+    link: "#",
+  },
+  {
+    title: "ceural Vision",
+    description: "AI-powered image recognition system that processes visual data in real-time.",
+    tech: ["Python", "TensorFlow", "OpenCV", "Docker"],
+    image: tntnPhoto,
+    link: "#",
+  },
+  {
+    title: "deural Vision",
+    description: "AI-powered image recognition system that processes visual data in real-time.",
+    tech: ["Python", "TensorFlow", "OpenCV", "Docker"],
+    image: tntnPhoto,
+    link: "#",
+  },
 ];
 
 function Projects() {
-    const containerRef = useRef(null);
-    const horizontalRef = useRef(null);
-    const { lenis } = useLenis();
+  const containerRef = useRef(null);
+  const trackRef = useRef(null);
+  const { lenis } = useLenis();
 
-    useEffect(() => { 
-        const container = containerRef.current;
-        const horizontal = horizontalRef.current;
-        if (!container || !horizontal) return;
+  useEffect(() => {
+    const container = containerRef.current;
+    const track = trackRef.current;
+    if (!container || !track) return;
 
-        // Hint the browser we will animate transforms
-        horizontal.style.willChange = 'transform';
+    // Cache metrics to avoid layout thrashing
+    let metrics = {
+      containerTop: 0,
+      containerHeight: 0,
+      windowHeight: 0,
+      windowWidth: 0,
+      maxScroll: 0,
+    };
 
-        // Precompute ranges and keep them fresh on resize
-        let windowHeight = window.innerHeight;
-        let windowWidth = window.innerWidth;
-        let containerTop = container.offsetTop;
-        let containerHeight = container.offsetHeight;
-        let scrollableHeight = Math.max(1, containerHeight - windowHeight);
+    const updateMetrics = () => {
+      const rect = container.getBoundingClientRect();
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      
+      metrics.containerTop = rect.top + scrollTop; // Absolute top position
+      metrics.containerHeight = container.offsetHeight;
+      metrics.windowHeight = window.innerHeight;
+      metrics.windowWidth = window.innerWidth;
+      
+      // The distance the user can scroll within this component
+      metrics.maxScroll = metrics.containerHeight - metrics.windowHeight;
+    };
 
-        // Make horizontal movement faster than vertical for a steeper diagonal
-        const horizontalSpeedFactor = 1.1; // increase for faster horizontal translation
-        let maxTranslateX = Math.max(0, (horizontal.scrollWidth - windowWidth) * horizontalSpeedFactor);
-        let maxTranslateY = Math.round(windowHeight * 0.7);
+    const tick = () => {
+      const scrollY = window.scrollY;
 
-        const recompute = () => {
-            windowHeight = window.innerHeight;
-            windowWidth = window.innerWidth;
-            containerTop = container.offsetTop;
-            containerHeight = container.offsetHeight;
-            scrollableHeight = Math.max(1, containerHeight - windowHeight);
-            maxTranslateX = Math.max(0, (horizontal.scrollWidth - windowWidth) * horizontalSpeedFactor);
-            maxTranslateY = Math.round(windowHeight * 0.7);
-        };
+      // Calculate how far we have scrolled PAST the top of the container
+      const scrolledInContainer = scrollY - metrics.containerTop;
 
-        let lastX = null;
-        let lastY = null;
-        const apply = (x, y) => {
-            if (x === lastX && y === lastY) return;
-            horizontal.style.transform = `translate3d(-${x}px, -${y}px, 0)`;
-            lastX = x;
-            lastY = y;
-        };
+      // Normalize this to a 0 to 1 value (clamped)
+      let progress = scrolledInContainer / metrics.maxScroll;
+      progress = Math.max(0, Math.min(1, progress));
 
-        const tick = () => {
-            const scrollY = window.scrollY;
-            const start = containerTop;
-            const end = containerTop + containerHeight;
-            const inView = scrollY >= start && scrollY <= end - windowHeight;
+      // Calculate the transform
+      // We want to move the track so the last project ends up exactly in the viewport
+      // Total movement needed = Total Track Dimension - One Viewport
+      const xMove = (projects.length * 100 * (metrics.windowWidth / 100)) - metrics.windowWidth;
+      const yMove = (projects.length * 100 * (metrics.windowHeight / 100)) - metrics.windowHeight;
 
-            if (inView) {
-                const currentScroll = Math.max(0, scrollY - start);
-                const progress = Math.max(0, Math.min(1, currentScroll / scrollableHeight));
-                const x = Math.round(progress * maxTranslateX);
-                const y = Math.round(progress * maxTranslateY);
-                apply(x, y);
-            } else if (scrollY < start) {
-                apply(0, 0);
-            } else if (scrollY > end) {
-                apply(maxTranslateX, maxTranslateY);
-            }
-        };
+      const x = progress * xMove;
+      const y = progress * yMove;
 
-        // rAF-scheduled updates to avoid multiple ticks per frame
-        let isTicking = false;
-        const requestTick = () => {
-            if (isTicking) return;
-            isTicking = true;
-            requestAnimationFrame(() => {
-                tick();
-                isTicking = false;
-            });
-        };
+      track.style.transform = `translate3d(-${x}px, -${y}px, 0)`;
+    };
 
-        // Event wiring: prefer Lenis, else scroll/resize with passive
-        const onResize = () => {
-            recompute();
-            requestTick();
-        };
-        window.addEventListener('resize', onResize, { passive: true });
+    // --- Optimization: Animation Loop ---
+    let rafId;
+    const loop = () => {
+      tick();
+      rafId = requestAnimationFrame(loop);
+    };
 
-        if (lenis && typeof lenis.on === 'function') {
-            lenis.on('scroll', requestTick);
-        } else {
-            window.addEventListener('scroll', requestTick, { passive: true });
-        }
+    // Initialize
+    updateMetrics();
+    loop(); // Start the loop
 
-        // initial paint
-        recompute();
-        requestTick();
+    const onResize = () => updateMetrics();
+    window.addEventListener("resize", onResize);
 
-        return () => {
-            window.removeEventListener('resize', onResize);
-            window.removeEventListener('scroll', requestTick);
-            if (lenis && typeof lenis.off === 'function') {
-                lenis.off('scroll', requestTick);
-            }
-        };
-    }, [lenis]);
-    return (
-        <section id="projects" 
-            ref={containerRef}
-            style={{ height: `${projects.length * 100}vh` }}
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener("resize", onResize);
+    };
+  }, [lenis]); // Re-bind if lenis instance changes, though usually not strictly necessary if using native scrollY
+
+  return (
+    <section
+      id="projects"
+      ref={containerRef}
+      style={{
+        // The scroll track height: Viewport height * number of projects
+        height: `${projects.length * 100}vh`,
+        position: "relative",
+      }}
+    >
+      {/* Sticky Container: Holds the viewport steady while we scroll the track */}
+      <div
+        className="project-sticky-container"
+        style={{
+          position: "sticky",
+          top: 0,
+          width: "100%",
+          height: "100vh",
+          overflow: "hidden",
+        }}
+      >
+        <div className="title-container project-title" style={{ position: "absolute", zIndex: 10, top: '70vh', left: '2rem' }}>
+          <div className="vertical-line"></div>
+          <div>
+            <h2>Projects</h2>
+            <p className="project-subtitle">
+              A showcase of my personal and academic projects
+            </p>
+          </div>
+        </div>
+
+        {/* The Diagonal Track */}
+        <div
+          ref={trackRef}
+          className="project-diagonal-track"
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: `${projects.length * 100}vw`,
+            height: `${projects.length * 100}vh`,
+            willChange: "transform",
+          }}
         >
-            <div className="title-container project-title">
-                <div className="vertical-line"></div>
-                <div>
-                    <h2>Projects</h2>
-                    <p className="project-subtitle">A showcase of my personal and academic projects</p>
+          {projects.map((project, index) => (
+            <div
+              key={index}
+              className="project-panel"
+              style={{
+                position: "absolute",
+                width: "100vw",
+                height: "100vh",
+                // Position projects diagonally:
+                // P1: 0,0 | P2: 100vw, 100vh | P3: 200vw, 200vh
+                left: `${index * 100}vw`,
+                top: `${index * 100}vh`,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center"
+              }}
+            >
+              <div className="project-content">
+                <div className="work-image">
+                  <img src={project.image} alt={project.title} />
                 </div>
-            </div>
-            <div className="project-sticky-container">
-                <div 
-                    ref={horizontalRef}
-                    className="project-horizontal-container"
-                    style={{ width: `${projects.length * 100}vw`,
-                             height: `${projects.length * 100}vh`
-                    }}
-                >
-                    {projects.map((project, index) => (
-                        <div
-                            key={index} 
-                            className="project-panel"
-                            style={{ width: `100vw`,
-                                     height: `100vh`,
-                                     transform: `translateY(${index * 100}vh)`
-                                  }}
-                        >
-                            <div className="project-content">
-                                <div className="work-image">
-                                    <img src={project.image}></img>
-                                </div>
-                            </div>
-                        </div>
+                <div className="project-info">
+                  <h3 className="project-title-1">{project.title}</h3>
+                  <p className="project-description">{project.description}</p>
+                  <div className="work-tech">
+                    {project.tech.map((tech, techIndex) => (
+                      <span key={techIndex} className="tech-tag">
+                        {tech}
+                      </span>
                     ))}
+                  </div>
                 </div>
+              </div>
             </div>
-        </section>
-    );
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }
 
 export default Projects;
