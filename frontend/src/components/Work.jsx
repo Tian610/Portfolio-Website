@@ -95,7 +95,7 @@ function Work() {
                             <div>
                                 <h2 className="work-title">Selected Work</h2>
                                 <p className="work-subtitle">
-                                    A collection of my professional experiences
+                                    An overview of my professional experiences
                                 </p>
                                 <div className="scroll-indicator">
                                     <span>Scroll to explore</span>

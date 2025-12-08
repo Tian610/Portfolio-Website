@@ -612,10 +612,11 @@ h2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
-    max-width: 1500px;
+    max-width: 1200px;
     width: 100%;
     padding: 2rem;
     align-items: center;
+    justify-items: center;
 }
 
 .work-intro-content .vertical-line {
@@ -664,12 +665,98 @@ h2 {
 
 .work-image {
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     border-radius: 12px;
     background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.project-content .work-image {
+    box-shadow: 
+    0 0 20px rgba(59, 130, 246, 0.4),
+    inset 0 0 20px rgba(139, 92, 246, 0.2);
+}
+
+/* Glowing animated border with tech vibes */
+.project-content .work-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 12px;
+    padding: 2px;
+    background: linear-gradient(
+        45deg,
+        #3b82f6,
+        #8b5cf6,
+        #ec4899,
+        #3b82f6
+    );
+    background-size: 300% 300%;
+    background-position: 0% 0%;
+    animation: shimmerBorder 4s linear infinite;
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 2;
+}
+
+@keyframes shimmerBorder {
+    0% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+/* Outer glow effect */
+.project-content .work-image::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 12px;
+    background: 
+        radial-gradient(ellipse at 20% 30%, rgba(59, 130, 246, 0.4), transparent 40%),
+        radial-gradient(ellipse at 80% 70%, rgba(139, 92, 246, 0.4), transparent 40%),
+        radial-gradient(ellipse at 50% 50%, rgba(236, 72, 153, 0.2), transparent 60%);
+    filter: blur(10px);
+    animation: glowPulse 3s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes glowPulse {
+    0%, 100% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+}
+
+/* Inner highlight for depth */
+.work-image-img {
+    position: relative;
+    z-index: 1;
 }
 
 /* Project section images with triangular corner cutoff */
