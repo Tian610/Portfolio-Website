@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { BlobServiceClient } from "@azure/storage-blob";
 import { Center } from "@react-three/drei";
+import { useNavigate } from "react-router-dom";
 
 function Gallery() {
     const [images, setImages] = useState([]);
     const [selectedIndex, setSelectedIndex] = useState(null);
+    const navigate = useNavigate();
     const storageAccountName = "tiansgallery";
     const containerName = "image-gallery";
 
@@ -14,12 +16,21 @@ function Gallery() {
                 const blobServiceClient = new BlobServiceClient(`https://${storageAccountName}.blob.core.windows.net/`);
                 const containerClient = blobServiceClient.getContainerClient(containerName);
 
-                const urls = [];
+                const blobsWithMetadata = [];
                 for await (const blob of containerClient.listBlobsFlat()) {
                     const url = `https://${storageAccountName}.blob.core.windows.net/${containerName}/${blob.name}`;
-                    urls.push(url);
+                    blobsWithMetadata.push({
+                        url: url,
+                        lastModified: blob.properties.lastModified
+                    });
                 }
-                setImages(urls);
+                
+                // Sort by most recent first (descending order)
+                blobsWithMetadata.sort((a, b) => b.lastModified - a.lastModified);
+                
+                // Extract just the URLs after sorting
+                const sortedUrls = blobsWithMetadata.map(blob => blob.url);
+                setImages(sortedUrls);
             } catch (err) {
                 console.log("Error listing blobs", err.message);
             }
@@ -77,14 +88,24 @@ function Gallery() {
     return () => window.removeEventListener("keydown", handleKeyDown);
     }, [selectedIndex, images.length]);
 
-
+    const goToHome = () => {
+        navigate('/');
+    };
     
     return (
         <>
             <section id="gallery">
                 <div className="header">
-                    <p className="section__text__p3">An Art Showcase</p>
-                    <h1 className="title">Gallery</h1>
+                    <div className="gallery-title-container">
+                        <div className="vertical-line"></div>
+                        <div >
+                            <h2>Gallery</h2>
+                            <p className="Akeila-text">Digital Illustrations</p>
+                        </div>
+                    </div>
+                    <button onClick={goToHome} className="nav-link">
+                        Home
+                    </button>
                 </div>
                     <div className="imageGalleryContainer">
                         {images.map((url, idx) => (

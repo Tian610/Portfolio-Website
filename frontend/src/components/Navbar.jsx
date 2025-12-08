@@ -1,83 +1,81 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import github from "../assets/github.png";
+import linkedin from "../assets/linkedin.png";
 
-function Navbar({ currentPath }) {
-    const isGalleryPage = currentPath === '/gallery';
+function Navbar() {
+    const [isScrolled, setIsScrolled] = useState(false);
+    const navigate = useNavigate();
     
-    return (
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };   
+
+    const scrollToSection = (sectionId) => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
+    const goToGallery = () => {
+        navigate('/gallery');
+    };
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollTop = window.scrollY;
+            setIsScrolled(scrollTop > 100);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    return(
         <>
-            <nav id="desktop-nav" className={isGalleryPage ? 'gallery-nav' : ''}>
-                <div className="logo">Tian Chen</div>
-                <div>
-                    {/* ul refers to unordered list */}
-                    <ul className="nav-links">
-                        {isGalleryPage ? (
-                            // Gallery page navigation
-                            <>
-                                <li><a href="/">Home</a></li>
-                                <li><a href="/#about">About</a></li>
-                                <li><a href="/#work">Work</a></li>
-                                <li><a href="/#experience">Experience</a></li>
-                                <li><a href="/#projects">Projects</a></li>
-                                <li><a href="/#contact">Contact</a></li>
-                            </>
-                        ) : (
-                            // Home page navigation
-                            <>
-                                <li><a href="#about">About</a></li>
-                                <li><a href="#work">Work</a></li>
-                                <li><a href="#experience">Experience</a></li>
-                                <li><a href="#projects">Projects</a></li>
-                                <li><a href="#contact">Contact</a></li>
-                                <li><a href="/gallery">Gallery</a></li>
-                            </>
-                        )}
-                    </ul>
+            <nav className={`nav-header ${isScrolled ? 'visible' : ''}`}>
+                <h1 onClick={scrollToTop}>Tian Chen</h1>
+                <div className="nav-links">
+                    <button onClick={() => scrollToSection('profile')} className="nav-link">
+                        Profile
+                    </button>
+                    <button onClick={() => scrollToSection('about')} className="nav-link">
+                        About
+                    </button>
+                    <button onClick={() => scrollToSection('work')} className="nav-link">
+                        Work
+                    </button>
+                    <button onClick={() => scrollToSection('projects')} className="nav-link">
+                        Projects
+                    </button>
+                    <button onClick={() => scrollToSection('contact')} className="nav-link">
+                        Contact
+                    </button>
+                    <button onClick={goToGallery} className="nav-link">
+                        Gallery
+                    </button>
                 </div>
             </nav>
 
-            {/* Mobile Navigation */}
-            <nav id="hamburger-nav" className={isGalleryPage ? 'gallery-nav' : ''}>
-                <div className="logo">Tian Chen</div>
-                <div className="hamburger-menu">
-                    {/* allows us to run js code on click */}
-                    <div className="hamburger-icon" onClick={toggleMenu}>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                    <div className="menu-links">
-                        {isGalleryPage ? (
-                            // Gallery page mobile navigation
-                            <>
-                                <li><a href="/" onClick={toggleMenu}>Home</a></li>
-                                <li><a href="/#about" onClick={toggleMenu}>About</a></li>
-                                <li><a href="/#contact" onClick={toggleMenu}>Contact</a></li>
-                            </>
-                        ) : (
-                            // Home page mobile navigation
-                            <>
-                                <li><a href="#about" onClick={toggleMenu}>About</a></li>
-                                <li><a href="#work" onClick={toggleMenu}>Work</a></li>
-                                <li><a href="#experience" onClick={toggleMenu}>Experience</a></li>
-                                <li><a href="#projects" onClick={toggleMenu}>Projects</a></li>
-                                <li><a href="#contact" onClick={toggleMenu}>Contact</a></li>
-                            </>
-                        )}
-                    </div>
+            <div className={`nav-footer ${isScrolled ? 'visible' : ''}`}>
+                <div className="nav-footer-left">
+                    <div className="title-footer">PORTFOLIO 2025</div>
                 </div>
-            </nav>
+
+                <div className="nav-footer-right">
+                    <a href="https://www.github.com/tian610" className="footer-item">
+                        <img src={github} className="nav-icon"></img>
+                        <div className="Akeila-text">GitHub</div>
+                    </a>
+                    <a href="https://www.linkedin.com/in/tianxingchen" className="footer-item">
+                        <img src={linkedin} className="nav-icon"></img>
+                        <div className="Akeila-text">LinkedIn</div>
+                    </a>
+                </div>
+            </div>
         </>
     );
-}
-
-function toggleMenu() {
-    // targets the icon and menu
-    const menu = document.querySelector(".menu-links");
-    const icon = document.querySelector(".hamburger-icon");
-
-    // Use the inbuilt js function toggle to allow us to css with the "open"
-    menu.classList.toggle("open");
-    icon.classList.toggle("open");
 }
 
 export default Navbar;

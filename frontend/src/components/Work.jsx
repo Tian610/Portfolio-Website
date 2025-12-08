@@ -1,91 +1,166 @@
-import React from "react";
-import techblazersImg from "../assets/techblazers.jpg";
-import arrowIcon from "../assets/arrow.png";
-import yorkIcon from "../assets/york.jpg";
-import tntnIcon from "../assets/tntn.jpg";
-import lumentumIcon from "../assets/lumentum.png";
+import React, { useState, useEffect, useRef } from "react";
+import ProfileSnippet from "./ProfileSnippet";
+import tntnPhoto from "../assets/tntnPhoto.jpg"
+import lumenPhoto from "../assets/lumenPhoto.png"
+import blazersPhoto from "../assets/blazersimage.webp"
+import lumentum from "../assets/lumentum.png"
+import tntn from "../assets/tntn.jpg"
+import techblazers from "../assets/techblazers.png"
+import yorkIcon from "../assets/york.png"
+import yorkPhoto from "../assets/york.webp"
+
+const projects = [
+    {
+        company: "Lumentum",
+        title: "Embedded Software DevSecOps Engineer",
+        description: [
+            "Gained hands-on experience with large-scale CI/CD infrastructure, release engineering workflows, and <b>Linux development</b>",
+            "Developed a full-stack analytics dashboard integrating with internal build systems and <b>GitHub</b> workflows to visualize release history, test trends, and pipeline statistics beyond standard GitHub capabilities.",
+        ],
+        tech: ["CI/CD", "GitHub", "React", "AWS/Azure"],
+        image: lumenPhoto,
+        icon: lumentum,
+        link: "https://www.lumentum.com/en"
+    },
+    {
+        company: "TNTN Robotics",
+        title: "Team Member and Designer",
+        description: [
+            "Earned the <b>World Excellence</b>, Tournament Champion, and Robot Skill Champion Awards, recognizing the top global team out of 109 University teams.",
+            "Developed real-time odometry systems and autonomous paths in <b>C++</b>, integrating IMUs and Optical Tracking Sensors."
+        ],
+        tech: ["C++", "CAD", "FPGA", "Control Systems"],
+        image: tntnPhoto,
+        icon: tntn,
+        link: "https://tntnvex.com/"
+    },
+    {
+        company: "TechBlazers",
+        title: "Robotics Coach",
+        description: [
+            "Coached six V5RC Robotics Teams for the 2024-2025 season of <b>VEX Robotics Competition.</b>",
+            "Taught hardware design, C++ programming for Robotics, game strategy, and effective documentation and communication strategies.",
+            "Coached teams to <b>championship</b> results at provincial and international events."
+        ],
+        tech: ["Coaching", "Project Management", "Strategy"],
+        icon: techblazers,
+        image: blazersPhoto,
+        link: "https://techblazers.ca/"
+    },
+    {
+        company: "York University",
+        title: "Research Intern",
+        description: [
+            "Conducted research on <b>reinforcement learning</b> for human-like autonomous driving in multi-agent environments.",
+            "Benchmarked models for safety, efficiency, and behavioral realism using <b>Python</b> simulations and synthetic traffic datasets",
+            "Implemented <b>DRQfD</b> (Deep Recurrent Q-learning from Demonstration), reducing simulated collision rates by 15% in complex traffic tests",
+        ],
+        tech: ["ML/RL", "Research", "ROS", "Gazebo"],
+        icon: yorkIcon,
+        image: yorkPhoto,
+        link: "https://techblazers.ca/"
+    },
+];
 
 function Work() {
+    const containerRef = useRef(null);
+    const horizontalRef = useRef(null);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (!containerRef.current || !horizontalRef.current) return;
+
+            const container = containerRef.current;
+            const horizontal = horizontalRef.current;
+            const containerRect = container.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            
+            // Check if work section is in view
+            if (containerRect.top <= 0 && containerRect.bottom >= windowHeight) {
+                // Calculate scroll progress within the work section
+                const scrollableHeight = container.scrollHeight - windowHeight;
+                const currentScroll = Math.abs(containerRect.top);
+                const progress = Math.min(currentScroll / scrollableHeight, 1);
+
+                // Apply horizontal transform
+                const maxTranslateX = horizontal.scrollWidth - window.innerWidth;
+                const translateX = progress * maxTranslateX;
+                horizontal.style.transform = `translateX(-${translateX}px)`;
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
     return (
-        <>
-            <section id="work">
-                <p className="section__text__p1">Learn about my</p>
-                <h1 className="title">Work History</h1>
-
-                <div className="timeline">
-                    <div className="timeline-line"></div>
+        <section 
+            id="work" 
+            ref={containerRef}
+            style={{ height: `${100 + projects.length * 100}vh` }}
+        >
+            <div className="work-sticky-container">
+                <div 
+                    ref={horizontalRef}
+                    className="work-horizontal-container"
+                    style={{ width: `${projects.length * 100}vw` }}
+                >
+                    <div className="work-intro-panel">
+                        <div className="work-intro-content">
+                            <div>
+                                <h2 className="work-title">Selected Work</h2>
+                                <p className="work-subtitle">
+                                    An overview of my professional experiences
+                                </p>
+                                <div className="scroll-indicator">
+                                    <span>Scroll to explore</span>
+                                    <div className="scroll-arrow">→</div>
+                                </div>
+                            </div>
+                            <div className="vertical-line"></div>
+                        </div>
+                    </div>
                     
-                    <div className="details-container line-right">
-                        <div className="right-container">
-                            <img src={lumentumIcon} alt="Lumentum Logo" className="icon" />
-                            <div className="work-details-container">
-                                <h2 className="work-title">Embedded Software DevSecOps Engineer</h2>
-                                <p>Lumentum</p>
+                    {projects.map((project, index) => (
+                        <div key={index} className="work-panel" >
+                            <div className="work-content">
+                                <div className="work-image">
+                                    <div className="image-area">
+                                        <img src={project.image} className="work-image-img" alt={project.title} />
+                                    </div>
+                                </div>
+                                <div className="work-info">
+                                    <div>
+                                        <h3 className="work-title-3">{project.title}</h3>
+                                        <hr className="line" />
+                                        <div style={{ display: "flex" }}>
+                                            <img src={project.icon} className="work-icon"></img>
+                                            <h3 className="company-title">{project.company}</h3>
+                                        </div>
+                                    </div>
+                                    <ul className="work-description">
+                                        {project.description.map((item, itemIndex) => (
+                                            <li
+                                                key={itemIndex}
+                                                dangerouslySetInnerHTML={{ __html: item }}
+                                            />
+                                        ))}
+                                    </ul>
+                                    <div className="work-tech">
+                                        {project.tech.map((tech, techIndex) => (
+                                            <span key={techIndex} className="tech-tag">{tech}</span>
+                                        ))}
+                                    </div>
+                                    <a href={project.link}  target="blank" className="work-link">
+                                        Learn more →
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <ul className="work-description">
-                            <li>Gained hands-on experience with large-scale CI/CD infrastructure, release engineering workflows, and <b>Linux development</b></li>
-                            <li>Leveraged <b>AI-based static analysis tools</b> to automatically flag code vulnerabilities and quality issues before release.</li>
-                            <li>Developed a full-stack analytics dashboard integrating with internal build systems and <b>GitHub</b> workflows to visualize release history, test trends, and pipeline statistics beyond standard GitHub capabilities.</li>
-                            <li>Optimized <b>SONiC</b> build pipelines by streamlining <b>Docker</b> layers, caching dependencies, and parallelizing workflows, resulting in up to a 75\% reduction in build times.</li>
-                        </ul>
-                    </div>
-
-                    <div className="details-container line-left">
-                        <div className="left-container">
-                            <div className="work-details-container">
-                                <h2 className="work-title">Robotics Instructor</h2>
-                                <p>Techblazers Academy</p>
-                            </div>
-                            <img src={techblazersImg} alt="Techblazers Academy" className="icon" />
-                        </div>
-                        <ul className="work-description">
-                            <li>Coached six V5RC Robotics Teams through the 2024-2025 competition season.</li>
-                            <li>Provided comprehensive instruction on hardware design, C++ programming for robotics, game strategy, and technical documentation.</li>
-                            <li>Led teams to <b>win tournaments</b> at the provincial and international level, a significant improvement from their prior performance.</li>
-                        </ul>
-                    </div>
-
-                    <div className="details-container line-right">
-                        <div className="right-container">
-                            <img src={tntnIcon} alt="TNTN Logo" className="icon" />
-                            <div className="work-details-container">
-                                <h2 className="work-title">Team Member</h2>
-                                <p>TNTN Robotics Team</p>
-                            </div>
-                        </div>
-                        <ul className="work-description">
-                            <li>Earned the World Excellence, Tournament Champion, and Robot Skill Champion Awards, recognizing the <b>top global team</b> out of 109 University teams.</li>
-                            <li>Developed real-time odometry systems and autonomous paths in C++, integrating IMUs and Optical Tracking Sensors.</li>
-                            <li>Authored a comprehensive 150-page technical report detailing hardware, software, and performance metrics.</li>
-                        </ul>
-                    </div>
-
-                    <div className="details-container line-left">
-                        <div className="left-container">
-                            <div className="work-details-container">
-                                <h2 className="work-title">AI Research Intern</h2>
-                                <p>York University</p>
-                            </div>
-                            <img src={yorkIcon} alt="York University" className="icon" />
-                        </div>
-                        <ul className="work-description">
-                            <li>Reinforced research on reinforcement learning for human-like autonomous driving in dynamic traffic environments.</li>
-                            <li>Validated models through comparative studies on safety and efficiency, testing them using simulated traffic datasets.</li>
-                            <li>Collaborated on creating a high-fidelity ROS-Gazebo simulator for LiDAR simulation, model training, and evaluation.</li>
-                            <li>Streamlined lane-changing decisions with the DRQfD algorithm, reducing collision risks by <b>15%</b> in autonomous vehicle testing.</li>
-                        </ul>
-                    </div>
+                    ))}
                 </div>
-
-                <img
-                    src={arrowIcon}
-                    alt="arrow"
-                    className="icon arrow"
-                    onClick={() => (window.location.href = "./#experience")}
-                />
-            </section>
-        </>
+            </div>
+        </section>
     );
 }
 

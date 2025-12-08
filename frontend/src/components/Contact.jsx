@@ -25,43 +25,51 @@ function Contact() {
 
     return (
         <section id="contact">
-            <div className="section-container">
-                <div className="header">
-                    <p className="section__text__p3">Reach out to me!</p>
-                    <h1 className="title">Contact</h1>
+            <div className="contact-snippet">
+                <div className="title-container">
+                    <div className="vertical-line"></div>
+                    <div>
+                        <h2>Contact</h2>
+                        <p className="project-subtitle">
+                            Reach out!
+                        </p>
+                    </div>
                 </div>
-                <div className="form-container">
+                <div className="contact-form-section">
                     <form ref={form} onSubmit={handleOnSubmit}>
                         <div className="form-element">
                             <label htmlFor="name" className="label-title">Name</label>
-                            <input type="text" id="name" name="name" placeholder="Your name..." />
+                            <input type="text" id="name" name="name" placeholder="Your name..." required />
                         </div>
                         <div className="form-element">
                             <label htmlFor="contact-details" className="label-title">Contact Details</label>
-                            <input type="text" id="contact-details" name="contact-details" placeholder="An email, phone number, etc." />
+                            <input type="text" id="contact-details" name="contact-details" placeholder="An email, phone number, etc." required />
                         </div>
                         <div className="form-element">
                             <label htmlFor="message" className="label-title">Message</label>
-                            <textarea id="message" name="message" placeholder="Write a message here!"></textarea>
+                            <textarea id="message" name="message" placeholder="Write a message here!" required></textarea>
                         </div>
-                        <div className="thingy">
-                            <input className="btn-color-2" type="submit" value="Submit" />
+                        <div className="form-actions">
+                            <input className="btn-submit" type="submit" value="Submit" />
                             {curState && (
                                 <span className="status-message animate-status">{curState}</span>
                             )}
                         </div>
                     </form>
-                    <br />
-                    <p>Or reach me at:</p>
-                    <div className="contact-container">
-                        <div className="contact-details-container">
-                            <img src={emailIcon} alt="email" className="icon" />
+                    <div className="contact-info-divider"></div>
+                    <p className="contact-or-text">Or reach me at:</p>
+                    <div className="contact-info-list">
+                        <div className="contact-info-item">
+                            <img src={emailIcon} alt="email" className="contact-icon" />
                             <a href="mailto:tianxingc@gmail.com">tianxingc@gmail.com</a>
                         </div>
-                        <div className="contact-details-container">
-                            <img src={emailIcon} alt="email" className="icon" />
+                        <div className="contact-info-item">
+                            <img src={emailIcon} alt="email" className="contact-icon" />
                             <a href="tel:647-769-5662">(647)-769-5662</a>
                         </div>
+                    </div>
+                    <div className="copyright-section">
+                        <p className="copyright-text">© 2025 Tian Chen. All rights reserved.</p>
                     </div>
                 </div>
             </div>
