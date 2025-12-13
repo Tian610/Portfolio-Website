@@ -1557,7 +1557,7 @@ b {
 
     /* --- Contact Section --- */
     #contact {
-        padding: 4rem 1.5rem;
+        padding: 2rem 1.5rem;
     }
 
     .contact-snippet {
@@ -1571,6 +1571,11 @@ b {
     
     .btn-submit {
         width: 100%; /* Full width button */
+    }
+    
+    .contact-snippet .title-container h2 {
+        font-size: 2rem;
+        padding-left: 1rem;
     }
 }
 
