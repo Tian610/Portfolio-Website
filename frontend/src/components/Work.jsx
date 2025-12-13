@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import ProfileSnippet from "./ProfileSnippet";
+// Make sure to check your import paths match your file structure
 import tntnPhoto from "../assets/tntnPhoto.jpg"
 import lumenPhoto from "../assets/lumenPhoto.png"
 import blazersPhoto from "../assets/blazersimage.webp"
@@ -65,8 +65,32 @@ const projects = [
 function Work() {
     const containerRef = useRef(null);
     const horizontalRef = useRef(null);
+    const [isMobile, setIsMobile] = useState(false);
 
+    // 1. Detect Screen Size
     useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+        
+        // Check on mount
+        checkMobile();
+        
+        // Check on resize
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    // 2. Handle Horizontal Scroll Logic (Only for Desktop)
+    useEffect(() => {
+        if (isMobile) {
+            // Reset transform if we switch to mobile view
+            if (horizontalRef.current) {
+                horizontalRef.current.style.transform = 'none';
+            }
+            return; 
+        }
+
         const handleScroll = () => {
             if (!containerRef.current || !horizontalRef.current) return;
 
@@ -77,12 +101,10 @@ function Work() {
             
             // Check if work section is in view
             if (containerRect.top <= 0 && containerRect.bottom >= windowHeight) {
-                // Calculate scroll progress within the work section
                 const scrollableHeight = container.scrollHeight - windowHeight;
                 const currentScroll = Math.abs(containerRect.top);
                 const progress = Math.min(currentScroll / scrollableHeight, 1);
 
-                // Apply horizontal transform
                 const maxTranslateX = horizontal.scrollWidth - window.innerWidth;
                 const translateX = progress * maxTranslateX;
                 horizontal.style.transform = `translateX(-${translateX}px)`;
@@ -91,19 +113,21 @@ function Work() {
 
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+    }, [isMobile]); // Re-run effect when isMobile changes
 
     return (
         <section 
             id="work" 
             ref={containerRef}
-            style={{ height: `${100 + projects.length * 100}vh` }}
+            // 3. Conditional Height: Huge height for desktop scrolling, Auto for mobile
+            style={{ height: isMobile ? 'auto' : `${100 + projects.length * 100}vh` }}
         >
             <div className="work-sticky-container">
                 <div 
                     ref={horizontalRef}
                     className="work-horizontal-container"
-                    style={{ width: `${projects.length * 100}vw` }}
+                    // 4. Conditional Width: Wide for desktop, 100% for mobile
+                    style={{ width: isMobile ? '100%' : `${projects.length * 100}vw` }}
                 >
                     <div className="work-intro-panel">
                         <div className="work-intro-content">
@@ -112,17 +136,20 @@ function Work() {
                                 <p className="work-subtitle">
                                     An overview of my professional experiences
                                 </p>
-                                <div className="scroll-indicator">
-                                    <span>Scroll to explore</span>
-                                    <div className="scroll-arrow">→</div>
-                                </div>
+                                {/* Hide scroll indicator on mobile via CSS or conditional rendering */}
+                                {!isMobile && (
+                                    <div className="scroll-indicator">
+                                        <span>Scroll to explore</span>
+                                        <div className="scroll-arrow">→</div>
+                                    </div>
+                                )}
                             </div>
                             <div className="vertical-line"></div>
                         </div>
                     </div>
                     
                     {projects.map((project, index) => (
-                        <div key={index} className="work-panel" >
+                        <div key={index} className="work-panel">
                             <div className="work-content">
                                 <div className="work-image">
                                     <div className="image-area">
@@ -133,8 +160,8 @@ function Work() {
                                     <div>
                                         <h3 className="work-title-3">{project.title}</h3>
                                         <hr className="line" />
-                                        <div style={{ display: "flex" }}>
-                                            <img src={project.icon} className="work-icon"></img>
+                                        <div style={{ display: "flex", alignItems: "center" }}>
+                                            <img src={project.icon} className="work-icon" alt="" />
                                             <h3 className="company-title">{project.company}</h3>
                                         </div>
                                     </div>
@@ -151,7 +178,7 @@ function Work() {
                                             <span key={techIndex} className="tech-tag">{tech}</span>
                                         ))}
                                     </div>
-                                    <a href={project.link}  target="blank" className="work-link">
+                                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="work-link">
                                         Learn more →
                                     </a>
                                 </div>

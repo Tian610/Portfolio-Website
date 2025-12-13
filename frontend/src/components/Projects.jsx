@@ -1,5 +1,5 @@
-import React, { useRef, useEffect } from "react";
-import { useLenis } from "../hooks/useLenis";
+import React, { useRef, useEffect, useState } from "react";
+import { useLenis } from "../hooks/useLenis"; // Ensure path is correct
 import gradmap from "../assets/gradmap.png";
 import de1soc from "../assets/de1soc.jpg";
 import github from "../assets/github.png";
@@ -36,13 +36,32 @@ function Projects() {
   const containerRef = useRef(null);
   const trackRef = useRef(null);
   const { lenis } = useLenis();
+  const [isMobile, setIsMobile] = useState(false);
 
+  // 1. Detect Screen Size
   useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // 2. Diagonal Scroll Animation Logic
+  useEffect(() => {
+    // If mobile, reset transform and do nothing else
+    if (isMobile) {
+      if (trackRef.current) {
+        trackRef.current.style.transform = "none";
+      }
+      return;
+    }
+
     const container = containerRef.current;
     const track = trackRef.current;
     if (!container || !track) return;
 
-    // Cache metrics to avoid layout thrashing
     let metrics = {
       containerTop: 0,
       containerHeight: 0,
@@ -54,49 +73,35 @@ function Projects() {
     const updateMetrics = () => {
       const rect = container.getBoundingClientRect();
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      
-      metrics.containerTop = rect.top + scrollTop; // Absolute top position
+      metrics.containerTop = rect.top + scrollTop;
       metrics.containerHeight = container.offsetHeight;
       metrics.windowHeight = window.innerHeight;
       metrics.windowWidth = window.innerWidth;
-      
-      // The distance the user can scroll within this component
       metrics.maxScroll = metrics.containerHeight - metrics.windowHeight;
     };
 
     const tick = () => {
       const scrollY = window.scrollY;
-
-      // Calculate how far we have scrolled PAST the top of the container
       const scrolledInContainer = scrollY - metrics.containerTop;
-
-      // Normalize this to a 0 to 1 value (clamped)
       let progress = scrolledInContainer / metrics.maxScroll;
       progress = Math.max(0, Math.min(1, progress));
 
-      // Calculate the transform
-      // We want to move the track so the last project ends up exactly in the viewport
-      // Total movement needed = Total Track Dimension - One Viewport
       const xMove = (projects.length * 100 * (metrics.windowWidth / 100)) - metrics.windowWidth;
       const yMove = (projects.length * 100 * (metrics.windowHeight / 100)) - metrics.windowHeight;
-
       const x = progress * xMove;
       const y = progress * yMove;
 
       track.style.transform = `translate3d(-${x}px, -${y}px, 0)`;
     };
 
-    // --- Optimization: Animation Loop ---
     let rafId;
     const loop = () => {
       tick();
       rafId = requestAnimationFrame(loop);
     };
 
-    // Initialize
     updateMetrics();
-    loop(); // Start the loop
-
+    loop();
     const onResize = () => updateMetrics();
     window.addEventListener("resize", onResize);
 
@@ -104,30 +109,41 @@ function Projects() {
       cancelAnimationFrame(rafId);
       window.removeEventListener("resize", onResize);
     };
-  }, [lenis]); // Re-bind if lenis instance changes, though usually not strictly necessary if using native scrollY
+  }, [lenis, isMobile]);
 
   return (
     <section
       id="projects"
       ref={containerRef}
       style={{
-        // The scroll track height: Viewport height * number of projects
-        height: `${projects.length * 100}vh`,
+        // On mobile, height is 'auto' to let content flow vertically. 
+        // On desktop, it's calculated for the scroll track.
+        height: isMobile ? "auto" : `${projects.length * 100}vh`,
         position: "relative",
       }}
     >
-      {/* Sticky Container: Holds the viewport steady while we scroll the track */}
       <div
         className="project-sticky-container"
         style={{
-          position: "sticky",
+          // On mobile, we remove the sticky/fixed behavior
+          position: isMobile ? "relative" : "sticky",
           top: 0,
           width: "100%",
-          height: "100vh",
-          overflow: "hidden",
+          height: isMobile ? "auto" : "100vh",
+          overflow: isMobile ? "visible" : "hidden",
         }}
       >
-        <div className="title-container project-title" style={{ position: "absolute", zIndex: 10, top: '70vh', left: '2rem' }}>
+        <div 
+          className="title-container project-title" 
+          style={{ 
+            // On mobile, position normally at the top. On desktop, keep absolute.
+            position: isMobile ? "relative" : "absolute", 
+            zIndex: 10, 
+            top: isMobile ? "auto" : '70vh', 
+            left: isMobile ? "0" : '2rem',
+            padding: isMobile ? "2rem 1.5rem 0 1.5rem" : "0"
+          }}
+        >
           <div className="vertical-line"></div>
           <div>
             <h2>Projects</h2>
@@ -137,17 +153,19 @@ function Projects() {
           </div>
         </div>
 
-        {/* The Diagonal Track */}
         <div
           ref={trackRef}
           className="project-diagonal-track"
           style={{
-            position: "absolute",
+            // On mobile: relative block. On desktop: absolute huge track.
+            position: isMobile ? "relative" : "absolute",
             top: 0,
             left: 0,
-            width: `${projects.length * 100}vw`,
-            height: `${projects.length * 100}vh`,
-            willChange: "transform",
+            width: isMobile ? "100%" : `${projects.length * 100}vw`,
+            height: isMobile ? "auto" : `${projects.length * 100}vh`,
+            willChange: isMobile ? "auto" : "transform",
+            display: isMobile ? "flex" : "block",
+            flexDirection: isMobile ? "column" : "row"
           }}
         >
           {projects.map((project, index) => (
@@ -155,13 +173,13 @@ function Projects() {
               key={index}
               className="project-panel"
               style={{
-                position: "absolute",
-                width: "100vw",
-                height: "100vh",
-                // Position projects diagonally:
-                // P1: 0,0 | P2: 100vw, 100vh | P3: 200vw, 200vh
-                left: `${index * 100}vw`,
-                top: `${index * 100}vh`,
+                // On mobile: Standard relative block.
+                // On desktop: Absolute positioned diagonally (step-ladder).
+                position: isMobile ? "relative" : "absolute",
+                width: isMobile ? "100%" : "100vw",
+                height: isMobile ? "auto" : "100vh",
+                left: isMobile ? "auto" : `${index * 100}vw`,
+                top: isMobile ? "auto" : `${index * 100}vh`,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center"
@@ -181,7 +199,7 @@ function Projects() {
                                 </a>
                               )}
                               <a href={project.link} target="blank">
-                                  <img src={github} className="github-icon"></img>
+                                  <img src={github} className="github-icon" alt="github"></img>
                               </a>
                             </div>
                         </div>
