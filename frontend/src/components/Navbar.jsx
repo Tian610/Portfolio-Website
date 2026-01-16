@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import github from "../assets/github.png";
 import linkedin from "../assets/linkedin.png";
+import resume from "../assets/Tian Chen Resume.pdf";
 
 function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -22,6 +23,10 @@ function Navbar() {
         navigate('/gallery');
     };
 
+    const openResume = () => {
+        window.open(resume, '_blank', 'noopener,noreferrer');
+    };
+
     useEffect(() => {
         const handleScroll = () => {
             const scrollTop = window.scrollY;
@@ -39,6 +44,9 @@ function Navbar() {
                 <div className="nav-links">
                     <button onClick={() => scrollToSection('profile')} className="nav-link">
                         Profile
+                    </button>
+                    <button onClick={openResume} className="nav-link">
+                        Resume
                     </button>
                     <button onClick={() => scrollToSection('about')} className="nav-link">
                         About
