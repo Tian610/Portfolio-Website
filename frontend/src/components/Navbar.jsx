@@ -45,9 +45,6 @@ function Navbar() {
                     <button onClick={() => scrollToSection('profile')} className="nav-link">
                         Profile
                     </button>
-                    <button onClick={openResume} className="nav-link">
-                        Resume
-                    </button>
                     <button onClick={() => scrollToSection('about')} className="nav-link">
                         About
                     </button>
@@ -59,6 +56,9 @@ function Navbar() {
                     </button>
                     <button onClick={() => scrollToSection('contact')} className="nav-link">
                         Contact
+                    </button>
+                    <button onClick={openResume} className="nav-link">
+                        Resume
                     </button>
                     <button onClick={goToGallery} className="nav-link">
                         Gallery
