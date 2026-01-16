@@ -12,11 +12,19 @@ import ScrollProgress from "./components/ScrollProgress";
 function App() {
   // Initialize Lenis smooth scrolling
   const { lenis, scrollTo, scrollToTop, scrollToElement } = useLenis();
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const checkMobile = () => setIsMobile(window.matchMedia('(max-width: 768px)').matches);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   return (
     <div className="app-container">
       <div className="gradient-background"></div>
-      <PerlinBackground />
+  {!isMobile && <PerlinBackground />}
       <ScrollProgress />
       <Router>
           <Routes>

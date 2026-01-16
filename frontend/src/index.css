@@ -21,8 +21,8 @@ html, body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     z-index: -10;
     overflow: hidden;
     background: 
@@ -1298,18 +1298,290 @@ b {
     letter-spacing: 0.05em;
 }
 
-/* Responsive Design */
+/* =========================================
+   MOBILE RESPONSIVENESS
+   Add this to the end of your CSS file
+   ========================================= */
+
+@media (max-width: 1024px) {
+    /* Tablet/Laptop adjustments for font sizing */
+    h1 { font-size: 5rem; }
+    h2 { font-size: 3rem; }
+    .about-container { padding: 0 5vw; }
+}
+
 @media (max-width: 768px) {
-    #contact {
-        padding: 2rem 1rem;
+    /* --- Global Typography & Layout --- */
+    h1 { font-size: 3.5rem; }
+    h2 { font-size: 2rem; }
+
+    .main-title.scrolled {
+        transform: translateY(-50px) scale(0.8);
+    }
+
+    .scrolling-line {
+        font-size: 3rem; /* Decrease scrolling background text */
+    }
+
+    /* --- Navigation --- */
+    .nav-header {
+        padding: 1rem;
+        background: rgba(0, 0, 0, 0.8); /* More contrast on mobile */
+    }
+
+    .nav-header h1 {
+        font-size: 1.2rem;
+    }
+
+    .nav-links {
+        display: none; /* Often better to hide links or use a hamburger menu on mobile. 
+                          If you want them visible, use: gap: 1rem; font-size: 0.8rem; */
+    }
+
+    .nav-footer {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        padding-bottom: 1rem;
+        background: linear-gradient(transparent, black);
+    }
+
+    .nav-footer-left, .nav-footer-right {
+        padding: 0.5rem;
+        width: 100%;
+    }
+
+    .nav-footer-left {
+        visibility: hidden;
     }
     
+    .nav-footer-right {
+        gap: 1.5rem;
+        justify-content: center;
+    }
+
+    .nav-footer-right .Akeila-text{
+        font-size: 1rem;
+    }
+
+    /* --- Profile / About Section --- */
+    .about-container {
+        padding: 0 1.5rem;
+    }
+
+    .profile-snippet {
+        grid-template-columns: 1fr; /* Stack columns vertically */
+        gap: 2rem;
+    }
+
+    /* Stop the title from being sticky on the side, move to top */
+    .title-container {
+        position: relative;
+        top: 0;
+        width: 100%;
+    }
+
+    .profile-section {
+        padding: 5rem 0; /* Reduce huge vertical padding */
+        max-width: 100%;
+    }
+
+    /* --- Gallery --- */
+    .imageGalleryContainer {
+        column-width: 100%; /* Single column gallery on phone */
+        padding-top: 2rem;
+    }
+    
+    #gallery {
+        margin: 4rem auto;
+        width: 100%;
+    }
+
+    .modalImage {
+        width: 95%; /* Ensure modal image fits screen */
+    }
+
+    /* --- Work Section (Horizontal Scroll Items) --- */
+    .work-sticky-container {
+        position: relative; /* Stop it from sticking to the top */
+        top: auto;
+        height: auto;
+    }
+
+    /* 2. Reset the horizontal container to a vertical stack */
+    .work-horizontal-container {
+        display: flex;
+        flex-direction: column; /* Stack vertically */
+        width: 100% !important; /* Force full width, override inline styles if JS lags */
+        height: auto;
+        transform: none !important; /* Force disable horizontal scroll transform */
+    }
+
+    /* 3. Adjust individual panels */
+    .work-intro-panel, 
+    .work-panel {
+        width: 100%; /* Take up screen width */
+        height: auto; /* Let content dictate height */
+        min-height: auto;
+        padding: 2rem 1.5rem; /* Add breathing room between projects */
+        border-bottom: 1px solid rgba(255,255,255,0.1); /* Optional: Separator */
+    }
+
+    /* 4. Intro Specifics */
+    .work-intro-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .work-intro-content .vertical-line {
+        width: 100%; /* Turn vertical line into a horizontal separator */
+        height: 4px;
+    }
+
+    /* 5. Project Content Layout */
+    .work-content {
+        grid-template-columns: 1fr; /* Stack image and text */
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        padding: 0;
+    }
+
+    .work-subtitle {
+        margin-bottom: 0;
+    }
+
+    /* 6. Image Adjustments */
+    .work-image {
+        width: 100%;
+        aspect-ratio: 16/9; /* Standard landscape aspect ratio */
+        margin: 0;
+    }
+    
+    .work-info {
+        gap: 1.5rem;
+    }
+
+    /* Ensure the company icon aligns with text */
+    .work-icon {
+        width: 2rem !important;
+        height: 2rem !important;
+        margin-right: 0.8rem;
+    }
+
+    /* Hide the scroll arrow on mobile if React didn't catch it */
+    .scroll-indicator {
+        display: none; 
+    }
+
+    .work-title {
+        font-size: 2.2rem;
+        transform: none; /* Remove scale transform to prevent overflow */
+    }
+
+    .work-title-3 {
+        font-size: 1rem;
+    }
+
+    .work-description {
+        margin: 0rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    /* --- Project Section --- */
+    .project-panel {
+        padding: 2rem 1rem;
+        align-items: flex-start; /* Align top on mobile */
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .project-content {
+        flex-direction: column;
+        width: 100%;
+        transform: none;
+        margin-top: 4rem;
+    }
+
+    /* Fix the Project Title positioning */
+    .project-title {
+        position: absolute; /* anchor to bottom of the panel on mobile */
+        bottom: 0 !important;
+        left: 0;
+        top: auto !important;
+        width: 100%;
+        display: flex;
+        align-items: center; /* keep vertical line and text aligned */
+        justify-content: center; /* center the whole title block */
+        padding: 1rem 0; /* small padding so it’s not flush to the edge */
+    }
+
+    .project-title h2 {
+        font-size: 1.5rem;
+        padding-left: 1rem;
+    }
+
+    .project-title p {
+        font-size: 1rem;
+    }
+
+    .project-title-1 {
+        font-size: 1rem;
+    }
+
+    /* Fix the floating Info box - make it stack normally */
+    .project-info {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        width: 100%;
+        max-width: 100%;
+        margin-top: -4rem; /* Pull it up slightly over the image if desired, or set to 1rem */
+        background: rgba(0, 0, 0, 0.8); /* Darker background for readability */
+        padding: 1.5rem;
+        gap: 0.5rem;
+    }
+    
+    .project-content .work-image {
+        aspect-ratio: 1 / 1; /* Square image looks better on mobile vertical layout */
+        max-height: 50vh;
+    }
+
+    .tech-tag {
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.7rem;
+    }
+
+    /* --- Contact Section --- */
+    #contact {
+        padding: 2rem 1.5rem;
+    }
+
     .contact-snippet {
         grid-template-columns: 1fr;
         gap: 3rem;
     }
-    
-    .contact-form-section {
-        max-width: 100%;
+
+    .contact-form-section form {
+        gap: 1.5rem;
     }
+    
+    .btn-submit {
+        width: 100%; /* Full width button */
+    }
+    
+    .contact-snippet .title-container h2 {
+        font-size: 2rem;
+        padding-left: 1rem;
+    }
+}
+
+/* Very Small Screens (e.g. older iPhones) */
+@media (max-width: 380px) {
+    h1 { font-size: 2.5rem; }
+    .nav-header { padding: 0.5rem; }
+    .work-title-2 { font-size: 1.8rem; }
 }
