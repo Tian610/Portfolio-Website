@@ -21,7 +21,10 @@ function Profile() {
 
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-    };    
+    };
+
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
     
     return (
         <>  
@@ -43,7 +46,7 @@ function Profile() {
                     <div className="profile-content">
                         <div className={`main-title ${isScrolled ? 'scrolled' : ''}`}>
                             <h1>Tian Chen</h1>
-                            <div className="title-footer">PORTFOLIO 2025</div>
+                            <div className="title-footer">PORTFOLIO {currentYear}</div>
                         </div>
 
                         <div className={`scroll-hint ${isScrolled ? 'scrolled' : ''}`}>
