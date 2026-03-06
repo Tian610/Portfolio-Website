@@ -37,6 +37,9 @@ function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+
     return(
         <>
             <nav className={`nav-header ${isScrolled ? 'visible' : ''}`}>
@@ -68,7 +71,7 @@ function Navbar() {
 
             <div className={`nav-footer ${isScrolled ? 'visible' : ''}`}>
                 <div className="nav-footer-left">
-                    <div className="title-footer">PORTFOLIO 2025</div>
+                    <div className="title-footer">PORTFOLIO {currentYear}</div>
                 </div>
 
                 <div className="nav-footer-right">

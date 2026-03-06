@@ -23,6 +23,9 @@ function Contact() {
           e.target.reset();
     };
 
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+
     return (
         <section id="contact">
             <div className="contact-snippet">
@@ -69,7 +72,7 @@ function Contact() {
                         </div>
                     </div>
                     <div className="copyright-section">
-                        <p className="copyright-text">© 2025 Tian Chen. All rights reserved.</p>
+                        <p className="copyright-text">© {currentYear} Tian Chen. All rights reserved.</p>
                     </div>
                 </div>
             </div>
