@@ -6,12 +6,14 @@ on:
     branches:
       - main
     paths:
+      - '.github/workflows/frontend-deploy.yml'
       - 'frontend/**'
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
     paths:
+      - '.github/workflows/frontend-deploy.yml'
       - 'frontend/**'
 
 jobs:
@@ -20,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
           lfs: false
@@ -35,6 +37,7 @@ jobs:
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           app_location: "frontend" # App source code path
           api_location: "" # Api source code path - optional
+          app_build_command: "npm run build"
           output_location: "dist" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
 
